@@ -10,12 +10,10 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDD5Hkp5Yj0mYm0R0xaPgny-zBZ-M58zro",
-    authDomain: "jobs-9caf9.firebaseapp.com",
-    projectId: "jobs-9caf9",
-    storageBucket: "jobs-9caf9.firebasestorage.app",
-    messagingSenderId: "773230600302",
-    appId: "1:773230600302:web:1272a5f6a3c9f6cb7a067f",
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTHDOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
 };
 
 const app = initializeApp(firebaseConfig);
