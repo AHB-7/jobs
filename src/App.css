@@ -1,0 +1,113 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    --d: rgb(33, 28, 28);
+    --w: white;
+    font-size: 1rem;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+p {
+    font-size: 1rem;
+}
+main {
+    /* height: 90vh; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+* {
+    box-sizing: border-box;
+}
+
+/* The gud of all buttons style */
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 2.5rem;
+    border-radius: 2rem;
+    background-color: var(--d);
+    color: var(--w);
+    border: none;
+    transition: 0.2s ease-in-out;
+    border: 0.1rem solid var(--w);
+    font-size: 1rem;
+}
+.button:hover {
+    background-color: black;
+    color: var(--w);
+}
+.button:active {
+    opacity: 80%;
+}
+.button-danger {
+    background-color: rgb(221, 25, 25);
+    border: 0.1rem solid rgb(221, 25, 25);
+}
+.button-danger:hover {
+    background-color: rgb(174, 20, 20);
+    color: var(--w);
+    border: 0.1rem solid rgb(174, 20, 20);
+}
+.button-success {
+    background-color: rgb(0, 137, 32);
+    border: 0.1rem solid rgb(0, 137, 32);
+}
+.button-success:hover {
+    background-color: rgb(0, 64, 15);
+    border: 0.1rem solid rgb(0, 64, 15);
+    color: var(--w);
+}
+.dropDown {
+    position: relative;
+}
+
+.dropdownContainer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--d);
+    color: var(--w);
+    padding: 1.2rem 0.2rem 0.8rem 0.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    border-radius: 1.2rem;
+    max-height: 12rem;
+    overflow: auto;
+    scrollbar-width: none;
+}
+.dropdownContainer-lg {
+    max-width: 14rem;
+}
+.dropdownContainer-md {
+    max-width: 10rem;
+}
+.dropdownContainer > P {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: start;
+    height: 100%;
+    width: 100%;
+    min-height: fit-content;
+    padding: 0.4rem;
+    overflow-x: hidden;
+}
+.dropdownContainer > P:hover {
+    background-color: rgb(47, 47, 47);
+}
+.dropdownContainer-md > P {
+    max-width: 10rem;
+}
+.dropdownContainer-lg > P {
+    max-width: 12rem;
+}
