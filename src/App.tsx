@@ -7,7 +7,9 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Auth />} />
-                <Route path="/profile/:id" element={<Profile />} />
+                <Route path="/profile/:id" element={<Profile />}>
+                    {/* <Route path="" element={} /> */}
+                </Route>
             </Routes>
         </BrowserRouter>
     );

@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { Button } from "../../coponents/button/Button";
 import {
     SignUpUser,
-    signOutUser,
     SignInUser,
     signInWithGoogle,
 } from "../../firebase";
@@ -46,16 +45,6 @@ export function Auth() {
                     Sign Up
                 </Button>
             </form>
-            <Button
-                variant="danger"
-                onClick={(e) => {
-                    e.preventDefault();
-                    signOutUser();
-                }}
-            >
-                Sign Out
-            </Button>
-            <div>{}</div>
         </>
     );
 }

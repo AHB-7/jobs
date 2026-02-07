@@ -4,7 +4,6 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    onAuthStateChanged,
     GoogleAuthProvider,
     signInWithPopup,
 } from "firebase/auth";
@@ -28,9 +27,7 @@ export function SignUpUser(emailInput: string, passwordInput: string) {
             console.log(userCredential);
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
+            return error;
         });
 }
 
@@ -42,9 +39,7 @@ export function SignInUser(emailInput: string, passwordInput: string) {
             console.log(userCredential);
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
+            return error;
         });
 }
 
@@ -54,9 +49,7 @@ export function signInWithGoogle() {
             console.log("signed in with google");
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
+            return error;
         });
 }
 
@@ -66,30 +59,28 @@ export function signOutUser() {
             console.log("user cleaned");
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
+            return error;
         });
 }
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        const uid = user.uid;
-        console.log("You are loged in");
-        // loged in view
-    } else {
-        // loged out view
-        console.log("You are loged out");
-    }
-});
+// onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//         const uid = user.uid;
+//         console.log("You are loged in");
+//         // loged in view
+//     } else {
+//         // loged out view
+//         console.log("You are loged out");
+//     }
+// });
 
-const user = auth.currentUser;
-export function getUserProfile() {
-    if (user !== null) {
-        const displayName = user.displayName;
-        const email = user.email;
-        const photoURL = user.photoURL;
-        const emailVerified = user.emailVerified;
-        const uid = user.uid;
-        console.log(displayName, email, photoURL, emailVerified);
-    }
-}
+// const user = auth.currentUser;
+// export function getUserProfile() {
+//     if (user !== null) {
+//         const displayName = user.displayName;
+//         const email = user.email;
+//         const photoURL = user.photoURL;
+//         const emailVerified = user.emailVerified;
+//         const uid = user.uid;
+//         console.log(displayName, email, photoURL, emailVerified);
+//     }
+// }
