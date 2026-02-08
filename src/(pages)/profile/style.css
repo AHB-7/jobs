@@ -32,12 +32,12 @@
     font-size: 1.4rem;
     z-index: 1000;
 }
-form {
+.form {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100% + 12rem);
+    height: 100vh;
     padding: 12rem auto;
     background-color: antiquewhite;
     display: flex;
@@ -46,7 +46,7 @@ form {
     justify-content: center;
     gap: 1rem;
 }
-form > input {
+.form > input {
     padding: 0.4rem 1rem 0.4rem 0.6rem;
     font-size: 1rem;
     border-radius: 1rem;
