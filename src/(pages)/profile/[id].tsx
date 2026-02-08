@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "../../coponents/button/Button";
+import { Button } from "../../components/button/Button";
 import { auth, signOutUser } from "../../firebase";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import type { User } from "firebase/auth";
@@ -7,7 +7,7 @@ import "./style.css";
 import { CiLogout } from "react-icons/ci";
 import { RiEditCircleFill } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
-import Input from "../../coponents/input/Input";
+import Input from "../../components/input/Input";
 
 export default function Profile() {
     const [user, setUser] = useState<User | null>(null);
@@ -62,7 +62,7 @@ export default function Profile() {
                             type="text"
                             name="displayName"
                             label="Display name"
-                            value={`${user?.displayName}`}
+                            defaultValue={`${user?.displayName}`}
                             onChange={(e) => setDisplayName(e.target.value)}
                             placeholder="Display Name"
                         />
@@ -70,7 +70,7 @@ export default function Profile() {
                             label="Avatar"
                             type="url"
                             name="photoURL"
-                            value={`${user?.photoURL}`}
+                            // value={`${user?.photoURL}`}
                             onChange={(e) => setPhotoURL(e.target.value)}
                             placeholder="Photo URL"
                         />

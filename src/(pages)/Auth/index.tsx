@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { Navigate } from "react-router-dom";
-import { Button } from "../../coponents/button/Button";
-import { SignUpUser, SignInUser, signInWithGoogle } from "../../firebase";
+import { Button } from "../../components/button/Button";
+import { signUpUser, signInUser, signInWithGoogle } from "../../firebase";
 import { useUserSession } from "../../hooks/useStore";
-import Input from "../../coponents/input/Input";
+import Input from "../../components/input/Input";
 
 export function Auth() {
     const emailRef = useRef<HTMLInputElement>(null);
@@ -39,7 +39,7 @@ export function Auth() {
             <Button
                 onClick={() => {
                     const { email, password } = getCredentials();
-                    SignInUser(email, password);
+                    signInUser(email, password);
                 }}
             >
                 Sign In
@@ -50,7 +50,7 @@ export function Auth() {
             <Button
                 onClick={() => {
                     const { email, password } = getCredentials();
-                    SignUpUser(email, password);
+                    signUpUser(email, password);
                 }}
             >
                 Sign Up

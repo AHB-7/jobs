@@ -18,71 +18,21 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
-const db = getFirestore(app);
 
-export function SignUpUser(emailInput: string, passwordInput: string) {
-    const email = emailInput;
-    const password = passwordInput;
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            console.log(userCredential);
-        })
-        .catch((error) => {
-            return error;
-        });
+export async function signUpUser(email: string, password: string) {
+    return createUserWithEmailAndPassword(auth, email, password);
 }
 
-export function SignInUser(emailInput: string, passwordInput: string) {
-    const email = emailInput;
-    const password = passwordInput;
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            console.log(userCredential);
-        })
-        .catch((error) => {
-            return error;
-        });
+export async function signInUser(email: string, password: string) {
+    return signInWithEmailAndPassword(auth, email, password);
 }
 
-export function signInWithGoogle() {
-    signInWithPopup(auth, provider)
-        .then((result) => {
-            console.log("signed in with google");
-        })
-        .catch((error) => {
-            return error;
-        });
+export async function signInWithGoogle() {
+    return signInWithPopup(auth, provider);
 }
 
-export function signOutUser() {
-    signOut(auth)
-        .then(() => {
-            console.log("user cleaned");
-        })
-        .catch((error) => {
-            return error;
-        });
+export async function signOutUser() {
+    return signOut(auth);
 }
-// onAuthStateChanged(auth, (user) => {
-//     if (user) {
-//         const uid = user.uid;
-//         console.log("You are loged in");
-//         // loged in view
-//     } else {
-//         // loged out view
-//         console.log("You are loged out");
-//     }
-// });
-
-// const user = auth.currentUser;
-// export function getUserProfile() {
-//     if (user !== null) {
-//         const displayName = user.displayName;
-//         const email = user.email;
-//         const photoURL = user.photoURL;
-//         const emailVerified = user.emailVerified;
-//         const uid = user.uid;
-//         console.log(displayName, email, photoURL, emailVerified);
-//     }
-// }

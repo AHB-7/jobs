@@ -2,7 +2,6 @@ import { useState, type ReactNode } from "react";
 import { Button } from "../button/Button";
 import { useToggle } from "../../hooks/useToggle";
 import React from "react";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 type DropdownProps = {
     children?: ReactNode;
@@ -27,7 +26,6 @@ function DropdownContainer({ children, variants }: DropdownProps) {
 function Dropdown({ children, trigger, variants }: DropdownProps) {
     const [open, toggle] = useToggle();
     const [triggerValue, setTriggerValue] = useState<ReactNode>(trigger);
-    const [state, setState] = useLocalStorage<string>("jobTitle", "state");
 
     return (
         <div className="dropDown">
@@ -40,8 +38,6 @@ function Dropdown({ children, trigger, variants }: DropdownProps) {
                         <p
                             key={index}
                             onClick={() => {
-                                console.log(child);
-                                setState(child);
                                 setTriggerValue(child);
                                 toggle();
                             }}
