@@ -1,27 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Navigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
 import { Button } from "../../coponents/button/Button";
-import { SignUpUser, SignInUser, signInWithGoogle, auth } from "../../firebase";
+import { SignUpUser, SignInUser, signInWithGoogle } from "../../firebase";
 import { useUserSession } from "../../hooks/useStore";
 
 export function Auth() {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
-    const { user, setUser } = useUserSession();
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-            if (firebaseUser) {
-                setUser({
-                    uid: firebaseUser.uid,
-                    email: firebaseUser.email ?? "",
-                    displayName: firebaseUser.displayName ?? "",
-                });
-            }
-        });
-        return () => unsubscribe();
-    }, [setUser]);
+    const { user } = useUserSession();
 
     if (user) return <Navigate to={`/profile/${user.uid}`} />;
 
