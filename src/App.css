@@ -40,11 +40,6 @@ main {
     justify-content: center;
     gap: 1rem;
 }
-.form > input {
-    padding: 0.4rem 1rem 0.4rem 0.6rem;
-    font-size: 1rem;
-    border-radius: 1rem;
-}
 
 .button {
     display: flex;

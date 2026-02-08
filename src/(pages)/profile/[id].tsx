@@ -7,6 +7,7 @@ import "./style.css";
 import { CiLogout } from "react-icons/ci";
 import { RiEditCircleFill } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
+import Input from "../../coponents/input/Input";
 
 export default function Profile() {
     const [user, setUser] = useState<User | null>(null);
@@ -57,17 +58,19 @@ export default function Profile() {
             <>
                 {open && (
                     <form onSubmit={handleUpdateProfile}>
-                        <input
+                        <Input
                             type="text"
                             name="displayName"
-                            value={displayName}
+                            label="Display name"
+                            value={`${user?.displayName}`}
                             onChange={(e) => setDisplayName(e.target.value)}
                             placeholder="Display Name"
                         />
-                        <input
+                        <Input
+                            label="Avatar"
                             type="url"
                             name="photoURL"
-                            value={photoURL}
+                            value={`${user?.photoURL}`}
                             onChange={(e) => setPhotoURL(e.target.value)}
                             placeholder="Photo URL"
                         />

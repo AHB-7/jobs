@@ -1,0 +1,23 @@
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+}
+.inputLable {
+    font-size: 0.8rem;
+}
+.inputStyle {
+    font-size: 1rem;
+    padding: 0.8rem 0.5rem;
+    width: 100%;
+    border: 0.1rem solid var(--d);
+    border-radius: 10rem;
+}
+.inputStyle:focus {
+    outline: none;
+}
+.inputStyle:active {
+    outline: none;
+}
