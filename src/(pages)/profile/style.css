@@ -1,0 +1,53 @@
+.header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.header > img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 20%;
+    object-fit: cover;
+}
+.header > div > h1 {
+    font-size: 1.4rem;
+}
+.header > div > p {
+    font-size: 0.8rem;
+    opacity: 80%;
+}
+.log-out {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 1.4rem;
+}
+.edit {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.4rem;
+    z-index: 1000;
+}
+form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 12rem);
+    padding: 12rem auto;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+form > input {
+    padding: 0.4rem 1rem 0.4rem 0.6rem;
+    font-size: 1rem;
+    border-radius: 1rem;
+}
