@@ -1,11 +1,13 @@
 import { Children, useState, type ReactNode } from "react";
 import { Button } from "../button/Button";
 import { useToggle } from "../../hooks/useToggle";
+import "./index.css";
 
 type DropdownProps = {
     children?: ReactNode;
     trigger?: ReactNode;
     variants?: string;
+    onChange?: (value: string) => void;
 };
 
 function DropdownContainer({ children, variants }: DropdownProps) {
@@ -22,13 +24,13 @@ function DropdownContainer({ children, variants }: DropdownProps) {
     );
 }
 
-function Dropdown({ children, trigger, variants }: DropdownProps) {
+function Dropdown({ children, trigger, variants, onChange }: DropdownProps) {
     const [open, toggle] = useToggle();
     const [triggerValue, setTriggerValue] = useState<ReactNode>(trigger);
 
     return (
-        <div className="dropDown">
-            <Button onClick={() => toggle()} className="button">
+        <div className="dropDown" onClick={(e) => e.stopPropagation()}>
+            <Button type="button" onClick={() => toggle()} className="button">
                 {triggerValue}
             </Button>
             {open && (
@@ -36,8 +38,10 @@ function Dropdown({ children, trigger, variants }: DropdownProps) {
                     {Children.map(children, (child, index) => (
                         <p
                             key={index}
-                            onClick={() => {
-                                setTriggerValue(child);
+                            onClick={(e) => {
+                                onChange?.(
+                                    (e.target as HTMLElement).textContent || "",
+                                );
                                 toggle();
                             }}
                         >

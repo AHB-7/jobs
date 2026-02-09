@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Button } from "../../components/button/Button";
 import { auth, createPost, db, signOutUser } from "../../firebase";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import type { User } from "firebase/auth";
-import "./style.css";
 import { CiLogout } from "react-icons/ci";
 import { RiEditCircleFill } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
@@ -15,16 +14,18 @@ import {
     query,
     where,
 } from "firebase/firestore";
-
+import { Dropdown } from "../../components/dropdown/Dropdown";
+import "./index.css";
 export default function Profile() {
     const [user, setUser] = useState<User | null>(null);
     const [displayName, setDisplayName] = useState("");
     const [photoURL, setPhotoURL] = useState("");
     const [open, toggle] = useToggle();
-    const [posts, setPosts] = useState<
-        { id: string; body: string }[]
-    >([]);
+    const [posts, setPosts] = useState<{ id: string; [key: string]: any }[]>(
+        [],
+    );
     const [postContent, setPostContent] = useState("");
+    const [status, setStatus] = useState("");
     const handleUpdateProfile = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!auth.currentUser) return;
@@ -42,8 +43,12 @@ export default function Profile() {
         return () => unsubscribe();
     }, []);
 
-    const handleCreatePost = (value: { postContent: string }) => {
-        createPost(value.postContent);
+    const handleCreatePost = (value: {
+        postContent: string;
+        status: string;
+        date: Date;
+    }) => {
+        createPost(value.postContent, value.status);
     };
 
     useEffect(() => {
@@ -57,7 +62,7 @@ export default function Profile() {
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const postsData = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
-                body: doc.data().body as string,
+                ...doc.data(),
             }));
             setPosts(postsData);
         });
@@ -111,24 +116,45 @@ export default function Profile() {
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    handleCreatePost({ postContent });
+                    handleCreatePost({ postContent, status, date: new Date() });
                     setPostContent("");
                 }}
             >
                 <Input
                     type="text"
+                    value={postContent}
                     onChange={(e) => {
-                        e.preventDefault();
                         setPostContent(e.target.value);
                     }}
                     name="postContent"
                     label="New Post"
                     placeholder="What's on your mind?"
+                    required
+                    min={4}
                 />
+                <Dropdown
+                    trigger="Status"
+                    variants="warning"
+                    onChange={(value: string) => setStatus(value)}
+                >
+                    {[
+                        "Planing",
+                        "Applied",
+                        "Called",
+                        "Interviewing",
+                        "Offered",
+                        "Rejected",
+                    ]}
+                </Dropdown>
                 <Button type="submit">Create Post</Button>
             </form>
+
             {posts.map((post) => (
-                <div key={post.id}>{post.body}</div>
+                <div key={post.id}>
+                    <h2>{post.body}</h2>
+                    <p>{post.createdAt?.toDate().toLocaleDateString()}</p>
+                    <p>{post.status}</p>
+                </div>
             ))}
         </>
     );

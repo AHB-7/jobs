@@ -42,11 +42,12 @@ export async function signOutUser() {
     return signOut(auth);
 }
 
-export async function createPost(content: string) {
+export async function createPost(content: string, status: string) {
     const user = auth.currentUser;
     if (!user) throw new Error("User not authenticated");
     return addDoc(collection(db, "posts"), {
         body: content,
+        status,
         userId: user.uid,
         createdAt: serverTimestamp(),
     });
