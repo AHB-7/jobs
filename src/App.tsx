@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Auth } from "./(pages)/Auth";
-import Profile from "./(pages)/profile/[id]";
+import { Auth } from "./pages/Auth";
+import Profile from "./pages/profile/[id]";
 import ProtectedRoute, { AuthListener } from "./firebase/auth";
 
 function App() {

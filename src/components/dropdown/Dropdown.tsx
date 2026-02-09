@@ -1,7 +1,6 @@
-import { useState, type ReactNode } from "react";
+import { Children, useState, type ReactNode } from "react";
 import { Button } from "../button/Button";
 import { useToggle } from "../../hooks/useToggle";
-import React from "react";
 
 type DropdownProps = {
     children?: ReactNode;
@@ -34,7 +33,7 @@ function Dropdown({ children, trigger, variants }: DropdownProps) {
             </Button>
             {open && (
                 <DropdownContainer variants={variants}>
-                    {React.Children.map(children, (child, index) => (
+                    {Children.map(children, (child, index) => (
                         <p
                             key={index}
                             onClick={() => {

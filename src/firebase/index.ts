@@ -11,12 +11,7 @@ import {
     getFirestore,
     collection,
     addDoc,
-    query,
-    where,
-    orderBy,
-    getDocs,
     serverTimestamp,
-    onSnapshot,
 } from "firebase/firestore";
 
 const firebaseConfig = {

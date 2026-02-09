@@ -13,7 +13,7 @@ const Input = forwardRef(
 
         return (
             <div className="inputContainer">
-                <label className="inputLable" htmlFor={inputId}>
+                <label className="inputLabel" htmlFor={inputId}>
                     {label}
                 </label>
                 <input
