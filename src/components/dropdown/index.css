@@ -6,7 +6,7 @@
     position: absolute;
     background-color: var(--d);
     color: var(--w);
-    padding: 1.2rem 0.2rem 0.8rem 0.2rem;
+    padding: 1rem 0.2rem 0.8rem 0.2rem;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -15,12 +15,7 @@
     max-height: 12rem;
     overflow: auto;
     scrollbar-width: none;
-}
-.dropdownContainer-lg {
-    max-width: 14rem;
-}
-.dropdownContainer-md {
-    max-width: 10rem;
+    z-index: 1;
 }
 .dropdownContainer > P {
     white-space: nowrap;
@@ -34,10 +29,4 @@
 }
 .dropdownContainer > P:hover {
     background-color: rgb(47, 47, 47);
-}
-.dropdownContainer-md > P {
-    max-width: 10rem;
-}
-.dropdownContainer-lg > P {
-    max-width: 12rem;
 }

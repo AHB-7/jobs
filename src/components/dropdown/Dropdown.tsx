@@ -10,18 +10,8 @@ type DropdownProps = {
     onChange?: (value: string) => void;
 };
 
-function DropdownContainer({ children, variants }: DropdownProps) {
-    return (
-        <div
-            className={
-                variants
-                    ? `dropdownContainer dropdownContainer-${variants}`
-                    : "dropdownContainer"
-            }
-        >
-            {children}
-        </div>
-    );
+function DropdownContainer({ children }: DropdownProps) {
+    return <div className="dropdownContainer">{children}</div>;
 }
 
 function Dropdown({ children, trigger, variants, onChange }: DropdownProps) {
@@ -34,11 +24,11 @@ function Dropdown({ children, trigger, variants, onChange }: DropdownProps) {
 
     return (
         <div className="dropDown" onClick={(e) => e.stopPropagation()}>
-            <Button type="button" onClick={() => toggle()} className="button">
+            <Button type="button" onClick={() => toggle()} className={variants}>
                 {triggerValue}
             </Button>
             {open && (
-                <DropdownContainer variants={variants}>
+                <DropdownContainer>
                     {Children.map(children, (child, index) => (
                         <p
                             key={index}

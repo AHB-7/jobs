@@ -6,7 +6,7 @@ type ButtonProps = ComponentPropsWithoutRef<"button"> & {
 };
 
 export function Button({ children, variant, className, ...rest }: ButtonProps) {
-    const classes = [variant ? `button-${variant}` : "", "button", className]
+    const classes = ["button", variant && `button-${variant}`, className]
         .filter(Boolean)
         .join(" ");
     return (

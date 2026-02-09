@@ -9,14 +9,14 @@
 .header > img {
     width: 5rem;
     height: 5rem;
-    border-radius: 20%;
+    border-radius: 1rem;
     object-fit: cover;
 }
 .header > div > h1 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 .header > div > p {
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     opacity: 80%;
 }
 .log-out {
@@ -24,6 +24,7 @@
     top: 1rem;
     left: 1rem;
     font-size: 1.4rem;
+    color: red;
 }
 .edit {
     position: absolute;
