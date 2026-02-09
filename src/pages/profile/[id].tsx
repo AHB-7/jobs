@@ -1,6 +1,6 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../../components/button/Button";
-import { auth, createPost, db, signOutUser } from "../../firebase";
+import { auth, createPost, db, signOutUser, updatePostStatus } from "../../firebase";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import type { User } from "firebase/auth";
 import { CiLogout } from "react-icons/ci";
@@ -153,7 +153,20 @@ export default function Profile() {
                 <div key={post.id}>
                     <h2>{post.body}</h2>
                     <p>{post.createdAt?.toDate().toLocaleDateString()}</p>
-                    <p>{post.status}</p>
+                    <Dropdown
+                        trigger={post.status}
+                        variants="warning"
+                        onChange={(value: string) => updatePostStatus(post.id, value)}
+                    >
+                        {[
+                            "Planing",
+                            "Applied",
+                            "Called",
+                            "Interviewing",
+                            "Offered",
+                            "Rejected",
+                        ]}
+                    </Dropdown>
                 </div>
             ))}
         </>

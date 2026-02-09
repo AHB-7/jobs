@@ -11,6 +11,8 @@ import {
     getFirestore,
     collection,
     addDoc,
+    doc,
+    updateDoc,
     serverTimestamp,
 } from "firebase/firestore";
 
@@ -51,4 +53,8 @@ export async function createPost(content: string, status: string) {
         userId: user.uid,
         createdAt: serverTimestamp(),
     });
+}
+
+export async function updatePostStatus(postId: string, status: string) {
+    return updateDoc(doc(db, "posts", postId), { status });
 }

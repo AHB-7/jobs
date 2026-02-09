@@ -1,4 +1,4 @@
-import { Children, useState, type ReactNode } from "react";
+import { Children, useEffect, useState, type ReactNode } from "react";
 import { Button } from "../button/Button";
 import { useToggle } from "../../hooks/useToggle";
 import "./index.css";
@@ -27,6 +27,10 @@ function DropdownContainer({ children, variants }: DropdownProps) {
 function Dropdown({ children, trigger, variants, onChange }: DropdownProps) {
     const [open, toggle] = useToggle();
     const [triggerValue, setTriggerValue] = useState<ReactNode>(trigger);
+
+    useEffect(() => {
+        setTriggerValue(trigger);
+    }, [trigger]);
 
     return (
         <div className="dropDown" onClick={(e) => e.stopPropagation()}>
