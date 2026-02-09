@@ -27,3 +27,11 @@
 .inputStyle:active {
     outline: none;
 }
+.inputError {
+    border-color: #e74c3c;
+    box-shadow: 0.2rem 0.2rem 0rem #e74c3c;
+}
+.inputErrorMsg {
+    font-size: 0.85rem;
+    color: #e74c3c;
+}

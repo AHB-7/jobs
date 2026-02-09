@@ -2,11 +2,12 @@ import { forwardRef, type ForwardedRef, type InputHTMLAttributes } from "react";
 import "./index.css";
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
+    error?: string;
 }
 
 const Input = forwardRef(
     (
-        { label, id, ...otherProps }: CustomInputProps,
+        { label, id, error, ...otherProps }: CustomInputProps,
         ref: ForwardedRef<HTMLInputElement>,
     ) => {
         const inputId = id || otherProps.name;
@@ -17,11 +18,12 @@ const Input = forwardRef(
                     {label}
                 </label>
                 <input
-                    className="inputStyle"
+                    className={`inputStyle ${error ? "inputError" : ""}`}
                     id={inputId}
                     ref={ref}
                     {...otherProps}
                 />
+                {error && <span className="inputErrorMsg">{error}</span>}
             </div>
         );
     },

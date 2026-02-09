@@ -42,8 +42,11 @@
     border: 0.1rem solid var(--w);
 }
 .sign-in-btn:hover {
-    background-color: var(--d);
-    color: var(--w);
+    background-color: var(--w);
+    color: var(--d);
+}
+.sign-in-btn:active {
+    opacity: 60%;
 }
 .google-btn {
     background-color: var(--s);
@@ -51,12 +54,11 @@
     border: none;
 }
 .google-btn:hover {
-    background-color: var(--d);
-    color: var(--w);
+    background-color: var(--w);
+    color: var(--d);
 }
-.form-container .button p {
-    font-size: 1rem;
-    text-shadow: 0.1rem 0.1rem 0rem var(--d);
+.google-btn:active {
+    opacity: 60%;
 }
 .sign-up-link {
     font-size: 1rem;
@@ -71,4 +73,15 @@
 .sign-up-link:hover {
     color: var(--p);
     text-shadow: 0.1rem 0.1rem 0rem var(--w);
+}
+.auth-error {
+    font-size: 0.9rem;
+    color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+    border: 0.1rem solid #e74c3c;
+    padding: 0.6rem 1rem;
+    border-radius: 0.2rem;
+    width: 100%;
+    max-width: 26rem;
+    text-align: center;
 }
