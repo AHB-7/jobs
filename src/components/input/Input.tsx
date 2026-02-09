@@ -26,5 +26,27 @@ const Input = forwardRef(
         );
     },
 );
+const Textarea = forwardRef(
+    (
+        { label, id, ...otherProps }: CustomInputProps,
+        ref: ForwardedRef<HTMLInputElement>,
+    ) => {
+        const inputId = id || otherProps.name;
 
-export default Input;
+        return (
+            <div className="inputContainer">
+                <label className="inputLabel" htmlFor={inputId}>
+                    {label}
+                </label>
+                <input
+                    className="inputStyle"
+                    id={inputId}
+                    ref={ref}
+                    {...otherProps}
+                />
+            </div>
+        );
+    },
+);
+
+export { Input, Textarea };

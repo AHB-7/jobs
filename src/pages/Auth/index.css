@@ -1,0 +1,74 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 5rem 1rem;
+    width: 100%;
+    max-width: 30rem;
+    margin: 8rem auto;
+    border-radius: 0.5rem;
+    background-color: rgba(236, 221, 6, 0.083);
+    border: 0.1rem solid var(--d);
+    box-shadow: 0.2rem 0.2rem 0rem var(--d);
+}
+.form-container h1 {
+    font-size: 3rem;
+    padding: 2rem 0;
+    color: var(--d);
+}
+.button-group {
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+.form-container .button {
+    width: 100%;
+    max-width: 26rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.sign-in-btn {
+    background-color: var(--p);
+    color: var(--w);
+    border: none;
+    border: 0.1rem solid var(--w);
+}
+.sign-in-btn:hover {
+    background-color: var(--d);
+    color: var(--w);
+}
+.google-btn {
+    background-color: var(--s);
+    color: var(--w);
+    border: none;
+}
+.google-btn:hover {
+    background-color: var(--d);
+    color: var(--w);
+}
+.form-container .button p {
+    font-size: 1rem;
+    text-shadow: 0.1rem 0.1rem 0rem var(--d);
+}
+.sign-up-link {
+    font-size: 1rem;
+    color: var(--d);
+    text-shadow: 0.1rem 0.1rem 0rem var(--w);
+    text-decoration: underline;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.2s ease-in-out;
+    margin-top: 1rem;
+}
+.sign-up-link:hover {
+    color: var(--p);
+    text-shadow: 0.1rem 0.1rem 0rem var(--w);
+}

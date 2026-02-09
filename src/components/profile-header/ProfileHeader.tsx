@@ -5,7 +5,7 @@ import type { User } from "firebase/auth";
 import { CiLogout } from "react-icons/ci";
 import { RiEditCircleFill } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
-import Input from "../input/Input";
+import { Input } from "../input/Input";
 import { Button } from "../button/Button";
 import "./index.css";
 

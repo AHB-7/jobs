@@ -3,20 +3,26 @@
     flex-direction: column;
     align-items: start;
     justify-content: center;
+    gap: 0.5rem;
     width: 100%;
+    max-width: 26rem;
 }
 .inputLabel {
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 .inputStyle {
     font-size: 1rem;
     padding: 0.8rem 0.5rem;
     width: 100%;
-    border: 0.1rem solid var(--d);
-    border-radius: 10rem;
+    border: 0.12rem solid var(--d);
+    border-radius: 0.2rem;
+    background-color: var(--w);
+    box-shadow: 0.2rem 0.2rem 0rem var(--d);
+    transition: 0.2s ease-in-out;
 }
 .inputStyle:focus {
     outline: none;
+    box-shadow: none;
 }
 .inputStyle:active {
     outline: none;
