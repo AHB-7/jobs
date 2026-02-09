@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "../../components/button/Button";
-import { auth, signOutUser } from "../../firebase";
+import { auth, createPost, signOutUser } from "../../firebase";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import type { User } from "firebase/auth";
 import "./style.css";
@@ -31,7 +31,9 @@ export default function Profile() {
         });
         return () => unsubscribe();
     }, []);
-
+    const handleCreatePost = () => {
+        createPost("something");
+    };
     return (
         <>
             <div className="header">
@@ -55,29 +57,28 @@ export default function Profile() {
                     toggle();
                 }}
             />
-            <>
-                {open && (
-                    <form onSubmit={handleUpdateProfile}>
-                        <Input
-                            type="text"
-                            name="displayName"
-                            label="Display name"
-                            defaultValue={`${user?.displayName}`}
-                            onChange={(e) => setDisplayName(e.target.value)}
-                            placeholder="Display Name"
-                        />
-                        <Input
-                            label="Avatar"
-                            type="url"
-                            name="photoURL"
-                            // value={`${user?.photoURL}`}
-                            onChange={(e) => setPhotoURL(e.target.value)}
-                            placeholder="Photo URL"
-                        />
-                        <Button type="submit">Update Profile</Button>
-                    </form>
-                )}
-            </>
+            {open && (
+                <form onSubmit={handleUpdateProfile}>
+                    <Input
+                        type="text"
+                        name="displayName"
+                        label="Display name"
+                        defaultValue={`${user?.displayName}`}
+                        onChange={(e) => setDisplayName(e.target.value)}
+                        placeholder="Display Name"
+                    />
+                    <Input
+                        label="Avatar"
+                        type="url"
+                        name="photoURL"
+                        // value={`${user?.photoURL}`}
+                        onChange={(e) => setPhotoURL(e.target.value)}
+                        placeholder="Photo URL"
+                    />
+                    <Button type="submit">Update Profile</Button>
+                </form>
+            )}
+            <Button onClick={handleCreatePost}>Create Post</Button>
         </>
     );
 }

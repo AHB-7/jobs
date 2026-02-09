@@ -7,7 +7,16 @@ import {
     GoogleAuthProvider,
     signInWithPopup,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    query,
+    where,
+    orderBy,
+    getDocs,
+    serverTimestamp,
+} from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -35,4 +44,24 @@ export async function signInWithGoogle() {
 
 export async function signOutUser() {
     return signOut(auth);
+}
+
+export async function createPost(content: string) {
+    const user = auth.currentUser;
+    if (!user) throw new Error("User not authenticated");
+    return addDoc(collection(db, "posts"), {
+        body: content,
+        userId: user.uid,
+        createdAt: serverTimestamp(),
+    });
+}
+
+export async function getPostsByUser(userId: string) {
+    const q = query(
+        collection(db, "posts"),
+        where("userId", "==", userId),
+        orderBy("createdAt", "desc"),
+    );
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 }
