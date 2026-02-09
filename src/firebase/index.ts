@@ -14,6 +14,7 @@ import {
     doc,
     updateDoc,
     serverTimestamp,
+    deleteDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -57,4 +58,7 @@ export async function createPost(content: string, status: string) {
 
 export async function updatePostStatus(postId: string, status: string) {
     return updateDoc(doc(db, "posts", postId), { status });
+}
+export async function deletePost(postId: string) {
+    return deleteDoc(doc(db, "posts", postId));
 }

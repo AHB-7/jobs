@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { Button } from "../../components/button/Button";
-import { auth, createPost, db, signOutUser, updatePostStatus } from "../../firebase";
+import {
+    auth,
+    createPost,
+    db,
+    deletePost,
+    signOutUser,
+    updatePostStatus,
+} from "../../firebase";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import type { User } from "firebase/auth";
 import { CiLogout } from "react-icons/ci";
@@ -156,7 +163,9 @@ export default function Profile() {
                     <Dropdown
                         trigger={post.status}
                         variants="warning"
-                        onChange={(value: string) => updatePostStatus(post.id, value)}
+                        onChange={(value: string) =>
+                            updatePostStatus(post.id, value)
+                        }
                     >
                         {[
                             "Planing",
@@ -167,6 +176,7 @@ export default function Profile() {
                             "Rejected",
                         ]}
                     </Dropdown>
+                    <Button onClick={() => deletePost(post.id)}>Delete</Button>
                 </div>
             ))}
         </>

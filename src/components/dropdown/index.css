@@ -3,6 +3,7 @@
     display: block;
 }
 .dropdownContainer {
+    position: absolute;
     background-color: var(--d);
     color: var(--w);
     padding: 1.2rem 0.2rem 0.8rem 0.2rem;
