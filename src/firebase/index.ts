@@ -16,6 +16,7 @@ import {
     orderBy,
     getDocs,
     serverTimestamp,
+    onSnapshot,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -54,14 +55,4 @@ export async function createPost(content: string) {
         userId: user.uid,
         createdAt: serverTimestamp(),
     });
-}
-
-export async function getPostsByUser(userId: string) {
-    const q = query(
-        collection(db, "posts"),
-        where("userId", "==", userId),
-        orderBy("createdAt", "desc"),
-    );
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 }

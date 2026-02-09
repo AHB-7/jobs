@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Button } from "../../components/button/Button";
-import { auth, createPost, signOutUser } from "../../firebase";
+import { auth, createPost, db, signOutUser } from "../../firebase";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import type { User } from "firebase/auth";
 import "./style.css";
@@ -8,13 +8,23 @@ import { CiLogout } from "react-icons/ci";
 import { RiEditCircleFill } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
 import Input from "../../components/input/Input";
+import {
+    collection,
+    onSnapshot,
+    orderBy,
+    query,
+    where,
+} from "firebase/firestore";
 
 export default function Profile() {
     const [user, setUser] = useState<User | null>(null);
     const [displayName, setDisplayName] = useState("");
     const [photoURL, setPhotoURL] = useState("");
     const [open, toggle] = useToggle();
-
+    const [posts, setPosts] = useState<{ id: string; [key: string]: any }[]>(
+        [],
+    );
+    const [postContent, setPostContent] = useState("");
     const handleUpdateProfile = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!auth.currentUser) return;
@@ -31,9 +41,29 @@ export default function Profile() {
         });
         return () => unsubscribe();
     }, []);
-    const handleCreatePost = () => {
-        createPost("something");
+
+    const handleCreatePost = (value: { postContent: string }) => {
+        createPost(value.postContent);
     };
+
+    useEffect(() => {
+        if (!user) return;
+        const postsRef = collection(db, "posts");
+        const q = query(
+            postsRef,
+            where("userId", "==", user.uid),
+            orderBy("createdAt", "desc"),
+        );
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const postsData = querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setPosts(postsData);
+        });
+        return () => unsubscribe();
+    }, [user]);
+
     return (
         <>
             <div className="header">
@@ -78,7 +108,28 @@ export default function Profile() {
                     <Button type="submit">Update Profile</Button>
                 </form>
             )}
-            <Button onClick={handleCreatePost}>Create Post</Button>
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    handleCreatePost({ postContent });
+                    setPostContent("");
+                }}
+            >
+                <Input
+                    type="text"
+                    onChange={(e) => {
+                        e.preventDefault();
+                        setPostContent(e.target.value);
+                    }}
+                    name="postContent"
+                    label="New Post"
+                    placeholder="What's on your mind?"
+                />
+                <Button type="submit">Create Post</Button>
+            </form>
+            {posts.map((post) => (
+                <div key={post.id}>{post.body}</div>
+            ))}
         </>
     );
 }
