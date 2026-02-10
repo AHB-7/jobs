@@ -68,9 +68,9 @@ export function ProfileHeader({ user }: { user: User | null }) {
     return (
         <>
             <div className="header">
-                {user?.photoURL === "" ||
-                user?.photoURL === null ||
-                user?.photoURL === undefined ? (
+                {user?.photoURL !== "" &&
+                user?.photoURL !== null &&
+                user?.photoURL !== undefined ? (
                     <img
                         src={`${user?.photoURL}`}
                         alt="profile image"
@@ -130,9 +130,10 @@ export function ProfileHeader({ user }: { user: User | null }) {
                             </button>
                         </div>
                         <>
-                            {user?.photoURL === "" ||
-                            user?.photoURL === null ||
-                            user?.photoURL === undefined ? (
+                            {user?.photoURL !== "" &&
+                            user?.photoURL !== null &&
+                            photoURL === "" &&
+                            photoURL !== undefined ? (
                                 <img
                                     src={`${photoURL || user?.photoURL}`}
                                     alt="Profile"
@@ -147,6 +148,7 @@ export function ProfileHeader({ user }: { user: User | null }) {
                             label="Display name"
                             id="displayName"
                             placeholder="Enter your display name"
+                            defaultValue={`${user?.displayName}`}
                             error={errors.displayName?.message}
                             {...register("displayName")}
                         />
