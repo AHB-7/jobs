@@ -3,7 +3,6 @@ import { auth, signOutUser } from "../../firebase";
 import { updateProfile } from "firebase/auth";
 import type { User } from "firebase/auth";
 import { CiLogout } from "react-icons/ci";
-import { RiEditCircleFill } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
 import { Input } from "../input/Input";
 import { Button } from "../button/Button";
@@ -12,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import "./index.css";
 import { FcReuse } from "react-icons/fc";
+import { TbUserEdit } from "react-icons/tb";
 
 const updateProfileSchema = z.object({
     displayName: z.string().min(1, "Display name is required"),
@@ -106,7 +106,7 @@ export function ProfileHeader({ user }: { user: User | null }) {
                     signOutUser();
                 }}
             />
-            <RiEditCircleFill
+            <TbUserEdit
                 className="edit"
                 onClick={() => {
                     toggle();
