@@ -11,10 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const createPostSchema = z.object({
     postContent: z
         .string()
-        .min(
-            4,
-            "My My ... You can do better than that! and write a bet longer job title 😉",
-        ),
+        .min(4, "My My ... You can write a bet longer job title 😉"),
     status: z.string().min(1, "Status is required"),
 });
 
@@ -39,7 +36,6 @@ export function CreatePost() {
         },
     });
 
-    const postContent = watch("postContent");
     const status = watch("status");
 
     const onSubmit = (data: CreatePostFormData) => {
@@ -74,7 +70,7 @@ export function CreatePost() {
                 />
 
                 <Dropdown
-                    trigger={`${errors.status ? "You forgot to selct me!" : status || "status"}`}
+                    trigger={`${errors.status ? errors.status.message : status || "status"}`}
                     variants="button-main-dropdown"
                     onChange={(value: string) =>
                         setValue("status", value, { shouldValidate: true })
