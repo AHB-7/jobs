@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    padding: 2rem 1rem;
     gap: 0.5rem;
 }
 .header > img {
@@ -13,7 +14,8 @@
     object-fit: cover;
 }
 .header > div > h1 {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
 }
 .header > div > p {
     font-size: 0.6rem;
@@ -24,7 +26,14 @@
     top: 1rem;
     left: 1rem;
     font-size: 1.4rem;
-    color: red;
+    color: var(--d);
+    cursor: pointer;
+}
+.log-out:hover {
+    color: var(--p);
+}
+.log-out:active {
+    color: var(--d);
 }
 .edit {
     position: absolute;
@@ -32,4 +41,88 @@
     right: 1rem;
     font-size: 1.4rem;
     z-index: 1000;
+    color: var(--d);
+    cursor: pointer;
+}
+.edit:hover {
+    color: var(--p);
+}
+.edit:active {
+    color: var(--s);
+}
+.profile-update-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+.profile-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--w);
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 0.25rem solid var(--d);
+    box-shadow: 0.5rem 0.5rem 0px var(--d);
+    width: 90%;
+    max-width: 400px;
+}
+.profile-form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+}
+.profile-form-header > h2 {
+    top: 1rem;
+    left: 1rem;
+    color: var(--d);
+}
+.close-btn {
+    background-color: transparent;
+    border: none;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    color: var(--d);
+    cursor: pointer;
+}
+.profile-update-btn {
+    margin-top: 1rem;
+    width: 100%;
+    background-color: var(--s);
+    color: var(--w);
+    margin-bottom: 3rem;
+}
+
+.photo-viewer {
+    cursor: pointer;
+    width: 5.2rem;
+    height: 5.2rem;
+    aspect-ratio: 1/1;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    margin: 3rem 0 1rem;
+    box-shadow: 0.1rem 0.5rem 1.5rem var(--d);
+}
+
+.close-btn:hover {
+    color: var(--p);
+}
+.close-btn:active {
+    color: var(--s);
 }

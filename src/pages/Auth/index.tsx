@@ -35,7 +35,10 @@ const firebaseErrorMessages: Record<string, string> = {
 
 function getFirebaseErrorMessage(error: unknown): string {
     if (error instanceof FirebaseError) {
-        return firebaseErrorMessages[error.code] ?? "Something went wrong. Please try again";
+        return (
+            firebaseErrorMessages[error.code] ??
+            "Something went wrong. Please try again"
+        );
     }
     return "Something went wrong. Please try again";
 }
@@ -72,43 +75,49 @@ export function Auth() {
     };
 
     return (
-        <form className="form-container" noValidate onSubmit={handleSubmit(onSignIn)}>
-            <h1>Sign in/up</h1>
-            {authError && <p className="auth-error">{authError}</p>}
-            <Input
-                label="Email Address"
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                error={errors.email?.message}
-                {...register("email")}
-            />
-            <Input
-                label="Password"
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                error={errors.password?.message}
-                {...register("password")}
-            />
-            <div className="button-group">
-                <Button type="submit" className="sign-in-btn">
-                    Sign In
-                </Button>
-                <Button
-                    type="button"
-                    onClick={() => signInWithGoogle()}
-                    className="google-btn"
-                >
-                    <FaGoogle /> <p>Continue with Google</p>
-                </Button>
-                <a
-                    className="sign-up-link"
-                    onClick={handleSubmit(onSignUp)}
-                >
-                    Sign Up
-                </a>
-            </div>
-        </form>
+        <div className="auth-page">
+            <form
+                className="form-container"
+                noValidate
+                onSubmit={handleSubmit(onSignIn)}
+            >
+                <h1>Sign in/up</h1>
+                {authError && <p className="auth-error">{authError}</p>}
+                <Input
+                    label="Email Address"
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    error={errors.email?.message}
+                    {...register("email")}
+                />
+                <Input
+                    label="Password"
+                    id="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    error={errors.password?.message}
+                    {...register("password")}
+                />
+                <div className="button-group">
+                    <Button type="submit" className="sign-in-btn">
+                        Sign In
+                    </Button>
+                    <Button
+                        type="button"
+                        onClick={() => signInWithGoogle()}
+                        className="google-btn"
+                    >
+                        <FaGoogle /> <p>Continue with Google</p>
+                    </Button>
+                    <a
+                        className="sign-up-link"
+                        onClick={handleSubmit(onSignUp)}
+                    >
+                        Sign Up
+                    </a>
+                </div>
+            </form>
+        </div>
     );
 }
