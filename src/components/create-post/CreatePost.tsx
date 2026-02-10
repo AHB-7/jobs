@@ -30,7 +30,7 @@ export function CreatePost() {
                     className="post-input"
                 />
                 <Dropdown
-                    trigger="Status"
+                    trigger={status || "Status"}
                     variants="button-main-dropdown"
                     onChange={(value: string) => setStatus(value)}
                 >

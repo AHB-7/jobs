@@ -37,7 +37,7 @@ function Dropdown({ children, trigger, variants, onChange }: DropdownProps) {
             {open && (
                 <DropdownContainer>
                     {Children.map(children, (child, index) => (
-                        <p
+                        <div
                             key={index}
                             onClick={(e) => {
                                 onChange?.(
@@ -46,8 +46,8 @@ function Dropdown({ children, trigger, variants, onChange }: DropdownProps) {
                                 toggle();
                             }}
                         >
-                            {child}
-                        </p>
+                            <p>{child}</p>
+                        </div>
                     ))}
                 </DropdownContainer>
             )}

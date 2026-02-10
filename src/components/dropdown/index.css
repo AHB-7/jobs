@@ -20,20 +20,20 @@
     border: 0.14rem solid var(--d);
     box-shadow: 0.2rem 0.2rem 0rem var(--d);
 }
-.dropdownContainer > P {
+.dropdownContainer-sm {
+    width: fit-content;
+}
+.dropdownContainer > div {
     white-space: nowrap;
     text-overflow: ellipsis;
     text-align: start;
     height: 100%;
     width: 100%;
     min-height: fit-content;
-    padding: 0.4rem;
+    padding: 0.5rem 0.4rem;
     overflow-x: hidden;
     border-bottom: 0.1rem solid var(--s);
 }
-.dropdownContainer > P:hover {
+.dropdownContainer > div:hover {
     background-color: var(--s);
-}
-.btn-open {
-    box-shadow: none;
 }
