@@ -42,6 +42,17 @@
     background-color: var(--s);
     color: var(--w);
 }
-.create-post-btn-open {
-    box-shadow: none;
+.create-post-btn:hover {
+    background-color: var(--p);
+    color: var(--w);
+}
+.create-post-btn.success {
+    background-color: var(--g);
+    color: var(--w);
+    border: 0.1rem solid var(--g);
+}
+.create-post-btn.success:hover {
+    background-color: var(--g);
+    color: var(--w);
+    border: 0.1rem solid var(--g);
 }

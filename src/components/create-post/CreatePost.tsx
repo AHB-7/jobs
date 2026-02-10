@@ -4,41 +4,93 @@ import { Dropdown } from "../dropdown/Dropdown";
 import { Button } from "../button/Button";
 import { STATUSES } from "../../constants/statuses";
 import "./index.css";
+import z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const createPostSchema = z.object({
+    postContent: z
+        .string()
+        .min(
+            4,
+            "My My ... You can do better than that! and write a bet longer job title 😉",
+        ),
+    status: z.string().min(1, "Status is required"),
+});
+
+type CreatePostFormData = z.infer<typeof createPostSchema>;
 
 export function CreatePost() {
-    const [postContent, setPostContent] = useState("");
-    const [status, setStatus] = useState("");
+    const [updateError, setUpdateError] = useState("");
+    const [updateSuccess, setUpdateSuccess] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        createPost(postContent, status);
-        setPostContent("");
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+        setValue,
+        watch,
+    } = useForm<CreatePostFormData>({
+        resolver: zodResolver(createPostSchema),
+        defaultValues: {
+            postContent: "",
+            status: "",
+        },
+    });
+
+    const postContent = watch("postContent");
+    const status = watch("status");
+
+    const onSubmit = (data: CreatePostFormData) => {
+        setUpdateError("");
+        createPost(data.postContent, data.status)
+            .then(() => {
+                setUpdateSuccess(true);
+                reset();
+                setTimeout(() => {
+                    setUpdateSuccess(false);
+                }, 3000);
+            })
+            .catch((error) => {
+                setUpdateError(error.message);
+            });
     };
 
     return (
         <div className="create-post-container">
-            <form onSubmit={handleSubmit} className="create-post-form">
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="create-post-form"
+            >
                 <textarea
-                    value={postContent}
-                    onChange={(e) => {
-                        setPostContent(e.target.value);
-                    }}
-                    name="postContent"
-                    placeholder="The job you have applied for, the company you have applied to."
-                    required
-                    minLength={4}
+                    {...register("postContent")}
+                    placeholder={
+                        errors.postContent
+                            ? errors.postContent.message
+                            : `${`Here we go again...`}`
+                    }
                     className="post-input"
                 />
+
                 <Dropdown
-                    trigger={status || "Status"}
+                    trigger={`${errors.status ? "You forgot to selct me!" : status || "status"}`}
                     variants="button-main-dropdown"
-                    onChange={(value: string) => setStatus(value)}
+                    onChange={(value: string) =>
+                        setValue("status", value, { shouldValidate: true })
+                    }
                 >
                     {STATUSES}
                 </Dropdown>
-                <Button type="submit" className="create-post-btn">
+                <Button
+                    type="submit"
+                    className={`create-post-btn ${updateSuccess ? "success" : ""}`}
+                >
                     Create Post
                 </Button>
+                {updateError && (
+                    <span className="error-message">{updateError}</span>
+                )}
             </form>
         </div>
     );
