@@ -16,26 +16,30 @@ export function CreatePost() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="create-post-form">
-            <textarea
-                value={postContent}
-                onChange={(e) => {
-                    setPostContent(e.target.value);
-                }}
-                name="postContent"
-                placeholder="The job you have applied for, the company you have applied to."
-                required
-                minLength={4}
-                className="post-input"
-            />
-            <Dropdown
-                trigger="Status"
-                variants="button-main-dropdown"
-                onChange={(value: string) => setStatus(value)}
-            >
-                {STATUSES}
-            </Dropdown>
-            <Button type="submit">Create Post</Button>
-        </form>
+        <div className="create-post-container">
+            <form onSubmit={handleSubmit} className="create-post-form">
+                <textarea
+                    value={postContent}
+                    onChange={(e) => {
+                        setPostContent(e.target.value);
+                    }}
+                    name="postContent"
+                    placeholder="The job you have applied for, the company you have applied to."
+                    required
+                    minLength={4}
+                    className="post-input"
+                />
+                <Dropdown
+                    trigger="Status"
+                    variants="button-main-dropdown"
+                    onChange={(value: string) => setStatus(value)}
+                >
+                    {STATUSES}
+                </Dropdown>
+                <Button type="submit" className="create-post-btn">
+                    Create Post
+                </Button>
+            </form>
+        </div>
     );
 }

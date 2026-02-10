@@ -48,7 +48,9 @@ main {
     border: 0.1rem solid var(--d);
     font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0.2rem 0.2rem 0rem rgb(0, 0, 0);
+    box-shadow: 0.2rem 0.2rem 0rem var(--d);
+    font-family: "Courier New", Courier, monospace;
+    font-weight: 600;
 }
 .button:hover {
     box-shadow: 0rem 0rem 0rem rgb(0, 0, 0);

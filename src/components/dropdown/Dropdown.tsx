@@ -23,8 +23,15 @@ function Dropdown({ children, trigger, variants, onChange }: DropdownProps) {
     }, [trigger]);
 
     return (
-        <div className="dropDown" onClick={(e) => e.stopPropagation()}>
-            <Button type="button" onClick={() => toggle()} className={variants}>
+        <div
+            onClick={(e) => e.stopPropagation()}
+            className="dropdown-and-container"
+        >
+            <Button
+                type="button"
+                onClick={() => toggle()}
+                className={`${open && "btn-open"} ${variants}`}
+            >
                 {triggerValue}
             </Button>
             {open && (
