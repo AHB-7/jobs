@@ -7,26 +7,70 @@ import { RiEditCircleFill } from "react-icons/ri";
 import { useToggle } from "../../hooks/useToggle";
 import { Input } from "../input/Input";
 import { Button } from "../button/Button";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import "./index.css";
 import { FcReuse } from "react-icons/fc";
 
-export function ProfileHeader({ user }: { user: User | null }) {
-    const [displayName, setDisplayName] = useState("");
-    const [photoURL, setPhotoURL] = useState("");
-    const [open, toggle] = useToggle();
+const updateProfileSchema = z.object({
+    displayName: z.string().min(1, "Display name is required"),
+    photoURL: z
+        .string()
+        .url("Please enter a valid URL")
+        .optional()
+        .or(z.literal("")),
+});
 
-    const handleUpdateProfile = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!auth.currentUser) return;
-        updateProfile(auth.currentUser, { displayName, photoURL }).catch(
-            (error) => console.error("Failed to update profile:", error),
-        );
+type UpdateProfileFormData = z.infer<typeof updateProfileSchema>;
+
+export function ProfileHeader({ user }: { user: User | null }) {
+    const [open, toggle] = useToggle();
+    const [updateError, setUpdateError] = useState("");
+    const [updateSuccess, setUpdateSuccess] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        watch,
+    } = useForm<UpdateProfileFormData>({
+        resolver: zodResolver(updateProfileSchema),
+        defaultValues: {
+            displayName: user?.displayName || "",
+            photoURL: user?.photoURL || "",
+        },
+    });
+
+    const photoURL = watch("photoURL");
+
+    const onUpdateProfile = async (data: UpdateProfileFormData) => {
+        try {
+            setUpdateError("");
+            setUpdateSuccess(false);
+            if (!auth.currentUser) return;
+
+            await updateProfile(auth.currentUser, {
+                displayName: data.displayName,
+                photoURL: data.photoURL || null,
+            });
+
+            setUpdateSuccess(true);
+            setTimeout(() => {
+                toggle();
+                setUpdateSuccess(false);
+            }, 1500);
+        } catch (error) {
+            setUpdateError("Failed to update profile. Please try again.");
+            console.error("Failed to update profile:", error);
+        }
     };
 
     return (
         <>
             <div className="header">
-                {user?.photoURL ? (
+                {user?.photoURL === "" ||
+                user?.photoURL === null ||
+                user?.photoURL === undefined ? (
                     <img
                         src={`${user?.photoURL}`}
                         alt="profile image"
@@ -36,7 +80,7 @@ export function ProfileHeader({ user }: { user: User | null }) {
                     />
                 ) : (
                     <FcReuse
-                        className="photo-viewer"
+                        className="photo-viewer icon-viewer"
                         role="Icone for profile image"
                         onClick={() => {
                             toggle();
@@ -71,43 +115,57 @@ export function ProfileHeader({ user }: { user: User | null }) {
             {open && (
                 <div className="profile-update-modal">
                     <form
-                        onSubmit={handleUpdateProfile}
+                        onSubmit={handleSubmit(onUpdateProfile)}
                         className="profile-form"
+                        noValidate
                     >
                         <div className="profile-form-header">
                             <h2>Update Your Profile</h2>
-                            <button className="close-btn" onClick={toggle}>
+                            <button
+                                type="button"
+                                className="close-btn"
+                                onClick={toggle}
+                            >
                                 &times;
                             </button>
                         </div>
                         <>
-                            {user?.photoURL ? (
+                            {user?.photoURL === "" ||
+                            user?.photoURL === null ||
+                            user?.photoURL === undefined ? (
                                 <img
                                     src={`${photoURL || user?.photoURL}`}
                                     alt="Profile"
-                                    className="photo-viewer"
+                                    className="photo-viewer "
                                 />
                             ) : (
-                                <FcReuse className="photo-viewer" />
+                                <FcReuse className="photo-viewer icon-viewer" />
                             )}
                         </>
                         <Input
                             type="text"
-                            name="displayName"
                             label="Display name"
-                            defaultValue={`${user?.displayName || "Write your name here..."}`}
-                            onChange={(e) => setDisplayName(e.target.value)}
-                            placeholder="Display Name"
-                            required
+                            id="displayName"
+                            placeholder="Enter your display name"
+                            error={errors.displayName?.message}
+                            {...register("displayName")}
                         />
                         <Input
-                            label="Avatar"
+                            label="Avatar URL"
                             type="url"
-                            name="photoURL"
-                            onChange={(e) => setPhotoURL(e.target.value)}
-                            placeholder="Photo URL"
-                            defaultValue={"Just copy any image url"}
+                            id="photoURL"
+                            placeholder="https://example.com/photo.jpg"
+                            error={errors.photoURL?.message}
+                            {...register("photoURL")}
                         />
+                        {updateError && (
+                            <p className="auth-error">{updateError}</p>
+                        )}
+                        {updateSuccess && (
+                            <p className="auth-success">
+                                Profile updated successfully!
+                            </p>
+                        )}
                         <Button className="profile-update-btn" type="submit">
                             Update Profile
                         </Button>
