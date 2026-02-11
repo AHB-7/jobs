@@ -2,13 +2,12 @@ import { deletePost, updatePostStatus, updatePostBody } from "../../firebase";
 import { Dropdown } from "../dropdown/Dropdown";
 import { STATUS_VARIANTS, STATUSES } from "../../constants/statuses";
 import { MdEdit } from "react-icons/md";
-import { FiDelete } from "react-icons/fi";
 import "./index.css";
 
 import { useToggle } from "../../hooks/useToggle";
 import { Button } from "../button/Button";
 import { useState } from "react";
-import { FaMinus, FaRegWindowClose } from "react-icons/fa";
+import { FaMinus } from "react-icons/fa";
 import { GrFormClose } from "react-icons/gr";
 
 export function PostCard({
