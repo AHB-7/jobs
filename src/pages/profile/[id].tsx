@@ -12,6 +12,7 @@ import {
 import { ProfileHeader } from "../../components/profile-header/ProfileHeader";
 import { CreatePost } from "../../components/create-post/CreatePost";
 import { PostCard } from "../../components/post-card/PostCard";
+import Filter from "../../components/filter/Filter";
 
 export default function Profile() {
     const [user, setUser] = useState<User | null>(null);
@@ -48,6 +49,7 @@ export default function Profile() {
         <div className="profile-page">
             <ProfileHeader user={user} />
             <CreatePost />
+            <Filter>{posts.length}</Filter>
             <div className="postes-list">
                 {posts.map((post) => (
                     <PostCard key={post.id} post={post} />

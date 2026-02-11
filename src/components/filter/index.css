@@ -1,0 +1,23 @@
+.filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 40rem;
+    padding: 0rem 0.5rem 0.5rem;
+}
+.joint-styling {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    font-family: "Courier New", Courier, monospace;
+}
+.left {
+    background-color: var(--w);
+}
+.right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8rem;
+    background-color: var(--y);
+}
