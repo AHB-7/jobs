@@ -1,59 +1,51 @@
-import { useEffect, useState } from "react";
-import { auth, db } from "../../firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import type { User } from "firebase/auth";
-import {
-    collection,
-    onSnapshot,
-    orderBy,
-    query,
-    where,
-} from "firebase/firestore";
+import { useState } from "react";
 import { ProfileHeader } from "../../components/profile-header/ProfileHeader";
 import { CreatePost } from "../../components/create-post/CreatePost";
 import { PostCard } from "../../components/post-card/PostCard";
 import Filter from "../../components/filter/Filter";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { usePosts } from "../../hooks/usePosts";
 
 export default function Profile() {
-    const [user, setUser] = useState<User | null>(null);
-    const [posts, setPosts] = useState<{ id: string; [key: string]: any }[]>(
-        [],
-    );
+    const { user, loading: userLoading } = useCurrentUser();
+    const { posts, loading: postsLoading } = usePosts({
+        userId: user?.uid,
+    });
+    const [filter, setFilter] = useState<string>("");
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-        });
-        return () => unsubscribe();
-    }, []);
+    if (userLoading) return <div>Loading...</div>;
 
-    useEffect(() => {
-        if (!user) return;
-        const postsRef = collection(db, "posts");
-        const q = query(
-            postsRef,
-            where("userId", "==", user.uid),
-            orderBy("createdAt", "desc"),
-        );
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            const postsData = querySnapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setPosts(postsData);
+    const filteredPosts = posts
+        .filter((post) => {
+            if (
+                !filter ||
+                filter === "Newest First" ||
+                filter === "Oldest First"
+            ) {
+                return true;
+            }
+            return post.status === filter;
+        })
+        .sort((a, b) => {
+            if (filter === "Oldest First") {
+                return a.createdAt - b.createdAt;
+            }
+            return b.createdAt - a.createdAt;
         });
-        return () => unsubscribe();
-    }, [user]);
 
     return (
         <div className="profile-page">
             <ProfileHeader user={user} />
             <CreatePost />
-            <Filter>{posts.length}</Filter>
+            <Filter onFilterChange={setFilter}>{filteredPosts.length}</Filter>
             <div className="postes-list">
-                {posts.map((post) => (
-                    <PostCard key={post.id} post={post} />
-                ))}
+                {postsLoading ? (
+                    <div>Loading posts...</div>
+                ) : (
+                    filteredPosts.map((post) => (
+                        <PostCard key={post.id} post={post} />
+                    ))
+                )}
             </div>
         </div>
     );

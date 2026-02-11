@@ -1,29 +1,31 @@
 import type { ReactNode } from "react";
 import { ImFilter } from "react-icons/im";
 import "./index.css";
-import { useToggle } from "../../hooks/useToggle";
 import { Dropdown } from "../dropdown/Dropdown";
 import { STATUSES } from "../../constants/statuses";
+
 type FilterProps = {
     children?: ReactNode;
+    onFilterChange: (filter: string) => void;
 };
-export default function Filter({ children }: FilterProps) {
-    const [_filterClicked, toggleFilter] = useToggle();
+
+export default function Filter({ children, onFilterChange }: FilterProps) {
+    const filters = ["Newest First", "Oldest First", ...STATUSES];
 
     return (
         <div className="filter-container">
-            <p className="joint-styling left">
-                You have applied to <strong>{children}</strong> jobs
+            <p className="left">
+                You have applied to <strong>{children}</strong>
             </p>
 
             <Dropdown
-                variants="joint-styling right"
+                variants="right"
                 trigger={<ImFilter />}
-                onChange={() => {
-                    toggleFilter();
+                onChange={(value) => {
+                    onFilterChange(value);
                 }}
             >
-                {["Oldest First", "Newest First", ...STATUSES]}
+                {filters}
             </Dropdown>
         </div>
     );
