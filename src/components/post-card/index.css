@@ -80,6 +80,9 @@
     color: var(--r);
     background-color: var(--d);
 }
+.confirm-delet-btn {
+    font-size: 1rem;
+}
 .edit-post-btn:hover {
     color: var(--w);
     background-color: var(--d);

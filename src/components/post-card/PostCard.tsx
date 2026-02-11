@@ -19,37 +19,77 @@ export function PostCard({
     const [newBody, setNewBody] = useState(post.body ?? "");
     const [currentStatus, setCurrentStatus] = useState(post.status);
     const [isSaved, setIsSaved] = useState(false);
-
+    const [isDeleting, setIsDeleting] = useState(false);
     return (
         <div className="post-card">
             <div className="post-header">
-                <p className="post-card-date">
-                    {post.createdAt?.toDate().toLocaleDateString()}
-                </p>
+                {isDeleting === isEditing && (
+                    <p className="post-card-date">
+                        {post.createdAt?.toDate().toLocaleDateString()}
+                    </p>
+                )}
+                {isDeleting && (
+                    <p className="post-card-date">
+                        You sure you want to remove this job
+                    </p>
+                )}
+                {isEditing && (
+                    <p className="post-card-date">Keep the the job as it is</p>
+                )}
                 <div className="actions-btn">
-                    {isEditing ? (
-                        <FaMinus
-                            onClick={() => {
-                                setIsSaved(true);
-                                toggleEditing();
-                            }}
-                            className="edit-post-btn post-btn edit-post-btn-close"
-                        />
+                    {isDeleting ? (
+                        <></>
                     ) : (
-                        <MdEdit
-                            onClick={() => {
-                                setIsSaved(false);
-                                toggleEditing();
-                            }}
-                            className="edit-post-btn post-btn"
-                        />
+                        <>
+                            {isEditing ? (
+                                <FaMinus
+                                    onClick={() => {
+                                        setIsSaved(true);
+                                        toggleEditing();
+                                    }}
+                                    className="edit-post-btn post-btn edit-post-btn-close"
+                                />
+                            ) : (
+                                <MdEdit
+                                    onClick={() => {
+                                        setIsSaved(false);
+                                        toggleEditing();
+                                    }}
+                                    className="edit-post-btn post-btn"
+                                />
+                            )}
+                        </>
                     )}
-                    {!isEditing && (
-                        <GrFormClose
-                            onClick={() => deletePost(post.id)}
-                            className="delete-post-btn post-btn"
-                        />
-                    )}
+
+                    {!isEditing &&
+                        (isDeleting ? (
+                            <div className="actions-btn">
+                                <a
+                                    onClick={() => {
+                                        deletePost(post.id);
+                                        setIsDeleting(false);
+                                    }}
+                                    className="edit-post-btn post-btn confirm-delet-btn edit-post-btn-close"
+                                >
+                                    yes
+                                </a>
+                                <a
+                                    onClick={() => {
+                                        setIsDeleting(false);
+                                    }}
+                                    className="edit-post-btn post-btn  confirm-delet-btn"
+                                >
+                                    no
+                                </a>
+                            </div>
+                        ) : (
+                            <GrFormClose
+                                onClick={() => {
+                                    setIsDeleting(true);
+                                }}
+                                className="delete-post-btn post-btn"
+                            />
+                        ))}
                 </div>
             </div>
 
