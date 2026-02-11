@@ -6,7 +6,7 @@
     top: 110%;
     background-color: var(--w);
     color: var(--d);
-    padding: 1rem 0.2rem 0.8rem 0.2rem;
+    /* padding: 1rem 0.2rem 0.8rem 0.2rem; */
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -19,9 +19,6 @@
     z-index: 1;
     border: 0.14rem solid var(--d);
     box-shadow: 0.2rem 0.2rem 0rem var(--d);
-}
-.dropdownContainer-sm {
-    width: fit-content;
 }
 .dropdownContainer > div {
     white-space: nowrap;

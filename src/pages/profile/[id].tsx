@@ -45,12 +45,14 @@ export default function Profile() {
     }, [user]);
 
     return (
-        <>
+        <div className="profile-page">
             <ProfileHeader user={user} />
             <CreatePost />
-            {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
-            ))}
-        </>
+            <div className="postes-list">
+                {posts.map((post) => (
+                    <PostCard key={post.id} post={post} />
+                ))}
+            </div>
+        </div>
     );
 }

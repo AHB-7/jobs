@@ -1,31 +1,105 @@
-import { deletePost, updatePostStatus } from "../../firebase";
+import { deletePost, updatePostStatus, updatePostBody } from "../../firebase";
 import { Dropdown } from "../dropdown/Dropdown";
-import { STATUSES } from "../../constants/statuses";
+import { STATUS_VARIANTS, STATUSES } from "../../constants/statuses";
+import { MdEdit } from "react-icons/md";
+import { FiDelete } from "react-icons/fi";
 import "./index.css";
-import { IoIosRemoveCircleOutline } from "react-icons/io";
+
+import { useToggle } from "../../hooks/useToggle";
+import { Button } from "../button/Button";
+import { useState } from "react";
+import { FaMinus, FaRegWindowClose } from "react-icons/fa";
+import { GrFormClose } from "react-icons/gr";
 
 export function PostCard({
     post,
 }: {
     post: { id: string; [key: string]: any };
 }) {
+    const [isEditing, toggleEditing] = useToggle({ initialValue: false });
+    const [newBody, setNewBody] = useState(post.body ?? "");
+    const [currentStatus, setCurrentStatus] = useState(post.status);
+    const [isSaved, setIsSaved] = useState(false);
+
     return (
         <div className="post-card">
-            <h2 className="post-card-title">{post.body}</h2>
-            <p className="post-card-date">
-                {post.createdAt?.toDate().toLocaleDateString()}
-            </p>
-            <Dropdown
-                variants="button-dropdown"
-                trigger={post.status}
-                onChange={(value: string) => updatePostStatus(post.id, value)}
-            >
-                {STATUSES}
-            </Dropdown>
-            <IoIosRemoveCircleOutline
-                onClick={() => deletePost(post.id)}
-                className="post-card-delete"
-            ></IoIosRemoveCircleOutline>
+            <div className="post-header">
+                <p className="post-card-date">
+                    {post.createdAt?.toDate().toLocaleDateString()}
+                </p>
+                <div className="actions-btn">
+                    {isEditing ? (
+                        <FaMinus
+                            onClick={() => {
+                                setIsSaved(true);
+                                toggleEditing();
+                            }}
+                            className="edit-post-btn post-btn edit-post-btn-close"
+                        />
+                    ) : (
+                        <MdEdit
+                            onClick={() => {
+                                setIsSaved(false);
+                                toggleEditing();
+                            }}
+                            className="edit-post-btn post-btn"
+                        />
+                    )}
+                    {!isEditing && (
+                        <GrFormClose
+                            onClick={() => deletePost(post.id)}
+                            className="delete-post-btn post-btn"
+                        />
+                    )}
+                </div>
+            </div>
+
+            {isEditing ? (
+                <>
+                    <textarea
+                        className="card-title onEdit"
+                        defaultValue={post.body}
+                        onChange={(e) => setNewBody(e.target.value)}
+                    />
+                    <Button
+                        onClick={async () => {
+                            await updatePostBody(post.id, newBody).catch(
+                                console.error,
+                            );
+                            setIsSaved(true);
+                            setTimeout(() => {
+                                toggleEditing();
+                                setIsSaved(false);
+                            }, 1000);
+                        }}
+                        className={
+                            isSaved ? "save-edit-succes" : "save-edit-btn"
+                        }
+                    >
+                        {isSaved ? "Saving..." : "Save Changes"}
+                    </Button>
+                </>
+            ) : (
+                <>
+                    <p className="card-title clamp">{post.body}</p>
+                    <div className="corner">
+                        <Dropdown
+                            variants={`${STATUS_VARIANTS[currentStatus.toLowerCase()]} button-dropdown`}
+                            containerClass="dropdownContainer-sm"
+                            trigger={currentStatus}
+                            onChange={(value: string) => {
+                                if (!value) return;
+                                setCurrentStatus(value);
+                                updatePostStatus(post.id, value).catch(
+                                    console.error,
+                                );
+                            }}
+                        >
+                            {STATUSES}
+                        </Dropdown>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

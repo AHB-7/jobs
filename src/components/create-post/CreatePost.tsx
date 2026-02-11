@@ -46,7 +46,7 @@ export function CreatePost() {
                 reset();
                 setTimeout(() => {
                     setUpdateSuccess(false);
-                }, 3000);
+                }, 200);
             })
             .catch((error) => {
                 setUpdateError(error.message);

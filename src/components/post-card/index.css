@@ -2,37 +2,129 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-    background-color: #f2f2f2;
+    align-items: start;
+    border: 0.14rem solid var(--d);
+    position: relative;
+    background-color: var(--s);
+    box-shadow: 0.2rem 0.2rem 0rem var(--d);
+    min-height: 8rem;
 }
-.post-card-title {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #333;
+.post-header {
+    padding: 0 0rem 0 0.5rem;
+    background-color: var(--w);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.1rem solid var(--d);
 }
 
+.card-title {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: start;
+    padding: 1rem 0 1rem 1rem;
+    color: var(--w);
+    width: 100%;
+    flex: 1;
+    resize: none;
+    border: none;
+    background: transparent;
+    min-height: 8rem;
+    max-height: 12rem;
+}
+.clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+}
+.card-title:focus {
+    outline: none;
+}
+.onEdit {
+    background-color: var(--d);
+    white-space: pre-line;
+}
+.save-edit-btn {
+    background-color: var(--y);
+    color: var(--d);
+    width: 100%;
+}
+.save-edit-succes {
+    background-color: var(--g);
+    width: 100%;
+}
+.save-edit-btn:hover {
+    background-color: var(--w);
+}
 .post-card-date {
-    color: #8a8a8a;
+    color: var(--d);
+    font-size: 0.8rem;
 }
-.post-card-dropdown {
-    background-color: red;
+.actions-btn {
+    display: flex;
+    align-items: center;
 }
-.post-card-delete {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    color: red;
+.post-btn {
+    color: var(--d);
     cursor: pointer;
-    font-size: 1.5em;
-    align-self: flex-end;
+    font-size: 1.4em;
+    padding: 0.1rem 1rem;
+    width: 100%;
+    border-left: 0.1rem solid var(--d);
+    transition: 0.3s ease-in-out;
+}
+.delete-post-btn:hover {
+    color: var(--r);
+    background-color: var(--d);
+}
+.edit-post-btn:hover {
+    color: var(--w);
+    background-color: var(--d);
+}
+.edit-post-btn-close {
+    color: var(--r);
+}
+.edit-post-btn-close:hover {
+    background-color: var(--r);
+    color: var(--w);
+}
+.corner {
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 .button.button-dropdown {
     padding: 0.4rem 0.8rem;
     border: none;
     cursor: pointer;
     font-size: 0.8rem;
+}
+.dropdownContainer-sm {
+    width: fit-content;
+    right: 0;
+}
+.gray {
+    background-color: var(--d);
+    color: var(--w);
+}
+.blue {
+    background-color: var(--p);
+    color: var(--w);
+}
+.yellow {
+    background-color: var(--y);
+    color: var(--d);
+}
+.purple {
+    background-color: lightpink;
+}
+.green {
+    background-color: var(--g);
+}
+.red {
+    background-color: var(--r);
+    color: var(--w);
 }

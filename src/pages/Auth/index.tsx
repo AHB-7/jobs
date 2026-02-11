@@ -8,7 +8,6 @@ import { Button } from "../../components/button/Button";
 import { signUpUser, signInUser, signInWithGoogle } from "../../firebase";
 import { useUserSession } from "../../hooks/useStore";
 import { Input } from "../../components/input/Input";
-import "./index.css";
 import { FaGoogle } from "react-icons/fa";
 
 const authSchema = z.object({
