@@ -124,7 +124,7 @@ export function PostCard({
                     <div className="corner">
                         <Dropdown
                             variants={`${STATUS_VARIANTS[currentStatus.toLowerCase()]} button-dropdown`}
-                            containerClass="dropdownContainer-sm"
+                            containerClass="dropdown-container-sm"
                             trigger={currentStatus}
                             onChange={(value: string) => {
                                 if (!value) return;

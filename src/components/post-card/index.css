@@ -105,7 +105,7 @@
     cursor: pointer;
     font-size: 0.8rem;
 }
-.dropdownContainer-sm {
+.dropdown-container-sm {
     width: fit-content;
     right: 0;
 }

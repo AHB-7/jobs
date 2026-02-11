@@ -14,7 +14,9 @@ type DropdownProps = {
 
 function DropdownContainer({ children, className }: DropdownProps) {
     return (
-        <div className={`dropdownContainer ${className || ""}`}>{children}</div>
+        <div className={`dropdown-container ${className || ""}`}>
+            {children}
+        </div>
     );
 }
 
