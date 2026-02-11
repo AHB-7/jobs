@@ -1,4 +1,10 @@
-import { Children, useEffect, useState, useRef, type ReactNode } from "react";
+import {
+    type ReactNode,
+    useRef,
+    useEffect,
+
+    isValidElement,
+} from "react";
 import { Button } from "../button/Button";
 import { useToggle } from "../../hooks/useToggle";
 import "./index.css";
@@ -8,17 +14,8 @@ type DropdownProps = {
     trigger?: ReactNode;
     variants?: string;
     onChange?: (value: string) => void;
-    containerClass?: ReactNode;
-    className?: ReactNode;
+    containerClass?: string;
 };
-
-function DropdownContainer({ children, className }: DropdownProps) {
-    return (
-        <div className={`dropdown-container ${className || ""}`}>
-            {children}
-        </div>
-    );
-}
 
 function Dropdown({
     children,
@@ -28,58 +25,66 @@ function Dropdown({
     onChange,
 }: DropdownProps) {
     const [open, toggle] = useToggle();
-    const [triggerValue, setTriggerValue] = useState<ReactNode>(trigger);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        setTriggerValue(trigger);
+        if (!open) return;
 
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 dropdownRef.current &&
                 !dropdownRef.current.contains(event.target as Node)
             ) {
-                if (open) toggle();
+                toggle();
             }
         };
 
         document.addEventListener("mousedown", handleClickOutside);
-
-        return () => {
+        return () =>
             document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [open, trigger]);
+    }, [open, toggle]);
+
+    const handleItemClick = (value: string) => {
+        onChange?.(value);
+        toggle();
+    };
 
     return (
-        <div
-            ref={dropdownRef}
-            onClick={(e) => e.stopPropagation()}
-            className="dropdown-and-container"
-        >
+        <div ref={dropdownRef} className="dropdown-and-container">
             <Button
                 type="button"
-                onClick={() => toggle()}
-                className={`${open && "btn-open"} ${variants}`}
+                onClick={toggle}
+                className={`${open ? "btn-open" : ""} ${variants || ""}`}
             >
-                {triggerValue}
+                {trigger}
             </Button>
             {open && (
-                <DropdownContainer className={containerClass}>
-                    {Children.map(children, (child, index) => (
-                        <div
-                            key={index}
-                            onClick={(e) => {
-                                onChange?.(
-                                    (e.target as HTMLElement).textContent || "",
-                                );
-                                toggle();
-                            }}
-                        >
-                            <p>{child}</p>
+                <div className={`dropdown-container ${containerClass || ""}`}>
+                    {Array.isArray(children) ? (
+                        children.map((child, index) => (
+                            <div
+                                key={index}
+                                onClick={() => {
+                                    const value =
+                                        isValidElement(child) && child.props
+                                            ? String(
+                                                  (child.props as any)
+                                                      .children || child,
+                                              )
+                                            : String(child);
+                                    handleItemClick(value);
+                                }}
+                            >
+                                <p>{child}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <div onClick={() => handleItemClick(String(children))}>
+                            <p>{children}</p>
                         </div>
-                    ))}
-                </DropdownContainer>
-            )}
+                    )}
+                </div>
+            )} 
         </div>
     );
 }

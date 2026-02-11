@@ -3,11 +3,13 @@ import { ImFilter } from "react-icons/im";
 import "./index.css";
 import { useToggle } from "../../hooks/useToggle";
 import { Dropdown } from "../dropdown/Dropdown";
+import { STATUSES } from "../../constants/statuses";
 type FilterProps = {
     children?: ReactNode;
 };
 export default function Filter({ children }: FilterProps) {
-    const [filterClicked, toggleFilter] = useToggle();
+    const [_filterClicked, toggleFilter] = useToggle();
+
     return (
         <div className="filter-container">
             <p className="joint-styling left">
@@ -15,13 +17,13 @@ export default function Filter({ children }: FilterProps) {
             </p>
 
             <Dropdown
-                className="joint-styling right"
+                variants="joint-styling right"
                 trigger={<ImFilter />}
-                onClick={() => {
+                onChange={() => {
                     toggleFilter();
                 }}
             >
-                {["10 days"]}
+                {["Oldest First", "Newest First", ...STATUSES]}
             </Dropdown>
         </div>
     );

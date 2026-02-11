@@ -15,11 +15,11 @@ export function PostCard({
 }: {
     post: { id: string; [key: string]: any };
 }) {
-    const [isEditing, toggleEditing] = useToggle({ initialValue: false });
+    const [isEditing, toggleEditing] = useToggle();
     const [newBody, setNewBody] = useState(post.body ?? "");
     const [currentStatus, setCurrentStatus] = useState(post.status);
-    const [isSaved, setIsSaved] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
+    const [isSaved, setIsSaved] = useToggle();
+    const [isDeleting, setIsDeleting] = useToggle();
     return (
         <div className="post-card">
             <div className="post-header">
@@ -44,7 +44,6 @@ export function PostCard({
                             {isEditing ? (
                                 <FaMinus
                                     onClick={() => {
-                                        setIsSaved(true);
                                         toggleEditing();
                                     }}
                                     className="edit-post-btn post-btn edit-post-btn-close"
@@ -52,7 +51,6 @@ export function PostCard({
                             ) : (
                                 <MdEdit
                                     onClick={() => {
-                                        setIsSaved(false);
                                         toggleEditing();
                                     }}
                                     className="edit-post-btn post-btn"
@@ -67,7 +65,7 @@ export function PostCard({
                                 <a
                                     onClick={() => {
                                         deletePost(post.id);
-                                        setIsDeleting(false);
+                                        setIsDeleting();
                                     }}
                                     className="edit-post-btn post-btn confirm-delet-btn edit-post-btn-close"
                                 >
@@ -75,7 +73,7 @@ export function PostCard({
                                 </a>
                                 <a
                                     onClick={() => {
-                                        setIsDeleting(false);
+                                        setIsDeleting();
                                     }}
                                     className="edit-post-btn post-btn  confirm-delet-btn"
                                 >
@@ -85,7 +83,7 @@ export function PostCard({
                         ) : (
                             <GrFormClose
                                 onClick={() => {
-                                    setIsDeleting(true);
+                                    setIsDeleting();
                                 }}
                                 className="delete-post-btn post-btn"
                             />
@@ -105,17 +103,15 @@ export function PostCard({
                             await updatePostBody(post.id, newBody).catch(
                                 console.error,
                             );
-                            setIsSaved(true);
+                            setIsSaved();
                             setTimeout(() => {
                                 toggleEditing();
-                                setIsSaved(false);
+                                setIsSaved();
                             }, 1000);
                         }}
-                        className={
-                            isSaved ? "save-edit-succes" : "save-edit-btn"
-                        }
+                        className={`save-edit-btn ${isSaved ? "save-edit-succes" : ""}`}
                     >
-                        {isSaved ? "Saving..." : "Save Changes"}
+                        {`Save Changes ${isSaved ? "Saving.." : ""}`}
                     </Button>
                 </>
             ) : (
