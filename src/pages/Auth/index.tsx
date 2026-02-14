@@ -9,6 +9,7 @@ import { signUpUser, signInUser, signInWithGoogle } from "../../firebase";
 import { useUserSession } from "../../hooks/useStore";
 import { Input } from "../../components/input/Input";
 import { FaGoogle } from "react-icons/fa";
+import { firebaseErrorMessages } from "../../constants/statuses";
 
 const authSchema = z.object({
     email: z
@@ -22,15 +23,6 @@ const authSchema = z.object({
 });
 
 type AuthFormData = z.infer<typeof authSchema>;
-
-const firebaseErrorMessages: Record<string, string> = {
-    "auth/user-not-found": "No account found with this email",
-    "auth/wrong-password": "Incorrect password",
-    "auth/invalid-credential": "Invalid email or password",
-    "auth/email-already-in-use": "An account with this email already exists",
-    "auth/too-many-requests": "Too many attempts. Please try again later",
-    "auth/network-request-failed": "Network error. Check your connection",
-};
 
 function getFirebaseErrorMessage(error: unknown): string {
     if (error instanceof FirebaseError) {

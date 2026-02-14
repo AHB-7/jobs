@@ -28,9 +28,9 @@ export default function Profile() {
         })
         .sort((a, b) => {
             if (filter === "Oldest First") {
-                return a.createdAt - b.createdAt;
+                return Number(a.createdAt) - Number(b.createdAt);
             }
-            return b.createdAt - a.createdAt;
+            return Number(b.createdAt) - Number(a.createdAt);
         });
 
     return (

@@ -2,15 +2,15 @@
 import { useState, useEffect } from "react";
 import { onSnapshot } from "firebase/firestore";
 import { getPostsQuery } from "../firebase";
+import type { PostDataTypes } from "../types";
 
 export function usePosts({ userId }: { userId?: string }) {
-    const [posts, setPosts] = useState<any[]>([]);
+    const [posts, setPosts] = useState<PostDataTypes>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!userId) return;
 
-        setLoading(true);
         const q = getPostsQuery(userId);
 
         // This starts the real-time connection
@@ -21,7 +21,7 @@ export function usePosts({ userId }: { userId?: string }) {
                     id: doc.id,
                     ...doc.data(),
                 }));
-                setPosts(postData);
+                setPosts(postData as PostDataTypes);
                 setLoading(false);
             },
             (error) => {

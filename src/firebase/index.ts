@@ -18,9 +18,7 @@ import {
     query,
     where,
     orderBy,
-    onSnapshot,
 } from "firebase/firestore";
-import { useState } from "react";
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -68,24 +66,7 @@ export async function createPost(content: string, status: string) {
         createdAt: serverTimestamp(),
     });
 }
-export async function fetchPosts(userUid: string) {
-    const postsRef = collection(db, "posts");
-    const [_post, setPosts] = useState();
-    const q = query(
-        postsRef,
-        where("userId", "==", userUid),
-        orderBy("createdAt", "desc"),
-    );
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-        const newPosts: any = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
-        setPosts(newPosts);
-    });
 
-    return () => unsubscribe();
-}
 export async function updatePostStatus(postId: string, status: string) {
     return updateDoc(doc(db, "posts", postId), { status });
 }
