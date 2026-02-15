@@ -1,7 +1,7 @@
-<<<<<<< HEAD
 # Jobshell
 
 A modern job application tracking web application that helps users stay organized during their job search journey.
+
 - [Live Link](jobshell.kodee.no)
 
 ## 📋 Overview
@@ -31,21 +31,24 @@ Jobshell is a simple yet powerful tool that allows users to register and track j
 ## Installation
 
 1. Clone the repository:
+
 ```bash
 https://github.com/AHB-7/jobs.git
 cd jobshell
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Set up Firebase:
-   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
-   - Enable Authentication and Firestore Database
-   - Copy your Firebase configuration
-   - Create a `.env` file in the root directory and add your Firebase credentials:
+    - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+    - Enable Authentication and Firestore Database
+    - Copy your Firebase configuration
+    - Create a `.env` file in the root directory and add your Firebase credentials:
+
 ```env
 VITE_FIREBASE_API_KEY=your_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
@@ -56,6 +59,7 @@ VITE_FIREBASE_APP_ID=your_app_id
 ```
 
 4. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -114,11 +118,12 @@ This project is licensed under the MIT License.
 
 ---
 
-**Note**: This project is currently in development. Features and documentation may change.
-=======
+# **Note**: This project is currently in development. Features and documentation may change.
+
 # Jobshell
 
 A modern job application tracking web application that helps users stay organized during their job search journey.
+
 - [Live Link](https://jobshell.kodee.no/)
 
 ## 📋 Overview
@@ -148,21 +153,24 @@ Jobshell is a simple yet powerful tool that allows users to register and track j
 ## Installation
 
 1. Clone the repository:
+
 ```bash
 https://github.com/AHB-7/jobs.git
 cd jobshell
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Set up Firebase:
-   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
-   - Enable Authentication and Firestore Database
-   - Copy your Firebase configuration
-   - Create a `.env` file in the root directory and add your Firebase credentials:
+    - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+    - Enable Authentication and Firestore Database
+    - Copy your Firebase configuration
+    - Create a `.env` file in the root directory and add your Firebase credentials:
+
 ```env
 VITE_FIREBASE_API_KEY=your_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
@@ -173,6 +181,7 @@ VITE_FIREBASE_APP_ID=your_app_id
 ```
 
 4. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -232,5 +241,3 @@ This project is licensed under the MIT License.
 ---
 
 **Note**: This project is currently in development. Features and documentation may change.
-
->>>>>>> 2816e11227609f8913dea23dfc2373af2dcb0178
