@@ -13,7 +13,6 @@ export function usePosts({ userId }: { userId?: string }) {
 
         const q = getPostsQuery(userId);
 
-        // This starts the real-time connection
         const unsubscribe = onSnapshot(
             q,
             (snapshot) => {
@@ -30,7 +29,6 @@ export function usePosts({ userId }: { userId?: string }) {
             },
         );
 
-        // Cleanup: stops listening when user leaves the page
         return () => unsubscribe();
     }, [userId]);
 

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { FirebaseError } from "firebase/app";
 import { Button } from "../../components/button/Button";
 import { signUpUser, signInUser, signInWithGoogle } from "../../firebase";
@@ -10,19 +9,7 @@ import { useUserSession } from "../../hooks/useStore";
 import { Input } from "../../components/input/Input";
 import { FaGoogle } from "react-icons/fa";
 import { firebaseErrorMessages } from "../../constants/statuses";
-
-const authSchema = z.object({
-    email: z
-        .string()
-        .min(1, "Email is required")
-        .email("Please enter a valid email"),
-    password: z
-        .string()
-        .min(1, "Password is required")
-        .min(6, "Password must be at least 6 characters"),
-});
-
-type AuthFormData = z.infer<typeof authSchema>;
+import { authSchema, type AuthFormData } from "../../constants/schema";
 
 function getFirebaseErrorMessage(error: unknown): string {
     if (error instanceof FirebaseError) {

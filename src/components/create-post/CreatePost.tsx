@@ -4,18 +4,12 @@ import { Dropdown } from "../dropdown/Dropdown";
 import { Button } from "../button/Button";
 import { STATUSES } from "../../constants/statuses";
 import "./index.css";
-import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const createPostSchema = z.object({
-    postContent: z
-        .string()
-        .min(4, "My My ... You can write a bet longer job title 😉"),
-    status: z.string().min(1, "Status is required"),
-});
-
-type CreatePostFormData = z.infer<typeof createPostSchema>;
+import {
+    createPostSchema,
+    type CreatePostFormData,
+} from "../../constants/schema";
 
 export function CreatePost() {
     const [updateError, setUpdateError] = useState("");

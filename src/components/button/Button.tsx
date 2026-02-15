@@ -1,9 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
-
-type ButtonProps = ComponentPropsWithoutRef<"button"> & {
-    children?: ReactNode;
-    variant?: string;
-};
+import type { ButtonProps } from "../../types";
 
 export function Button({ children, variant, className, ...rest }: ButtonProps) {
     const classes = ["button", variant && `button-${variant}`, className]

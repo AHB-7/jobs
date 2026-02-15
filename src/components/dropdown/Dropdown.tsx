@@ -1,24 +1,18 @@
-import {
-    type ReactNode,
-    useRef,
-    useEffect,
-
-    isValidElement,
-} from "react";
+import { useRef, useEffect } from "react";
 import { Button } from "../button/Button";
 import { useToggle } from "../../hooks/useToggle";
 import "./index.css";
 
 type DropdownProps = {
-    children?: ReactNode;
-    trigger?: ReactNode;
+    children?: string[];
+    trigger?: string;
     variants?: string;
     onChange?: (value: string) => void;
     containerClass?: string;
 };
 
 function Dropdown({
-    children,
+    children = [],
     trigger,
     containerClass,
     variants,
@@ -54,37 +48,21 @@ function Dropdown({
             <Button
                 type="button"
                 onClick={toggle}
-                className={`${open ? "btn-open" : ""} ${variants || ""}`}
+                className={`${open ? "btn-open" : ""} ${variants || ""}`.trim()}
             >
                 {trigger}
             </Button>
             {open && (
-                <div className={`dropdown-container ${containerClass || ""}`}>
-                    {Array.isArray(children) ? (
-                        children.map((child, index) => (
-                            <div
-                                key={index}
-                                onClick={() => {
-                                    const value =
-                                        isValidElement(child) && child.props
-                                            ? String(
-                                                  (child.props as any)
-                                                      .children || child,
-                                              )
-                                            : String(child);
-                                    handleItemClick(value);
-                                }}
-                            >
-                                <p>{child}</p>
-                            </div>
-                        ))
-                    ) : (
-                        <div onClick={() => handleItemClick(String(children))}>
-                            <p>{children}</p>
+                <div
+                    className={`dropdown-container ${containerClass || ""}`.trim()}
+                >
+                    {children.map((child, index) => (
+                        <div key={index} onClick={() => handleItemClick(child)}>
+                            <p>{child}</p>
                         </div>
-                    )}
+                    ))}
                 </div>
-            )} 
+            )}
         </div>
     );
 }
