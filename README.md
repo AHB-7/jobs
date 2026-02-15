@@ -1,7 +1,7 @@
 # Jobshell
 
 A modern job application tracking web application that helps users stay organized during their job search journey.
-- [Live Link](jobshell.kodee.no)
+- [Live Link](https://jobshell.kodee.no/)
 
 ## 📋 Overview
 
@@ -102,7 +102,7 @@ This project is licensed under the MIT License.
 
 ## 👤 Author
 
-- [Alan Brim ](kodee.no)
+- [Alan Brim ](https://kodee.no/)
 - [LinkedIn](https://www.linkedin.com/in/alanbrim/)
 
 ## Acknowledgments
@@ -114,3 +114,4 @@ This project is licensed under the MIT License.
 ---
 
 **Note**: This project is currently in development. Features and documentation may change.
+
