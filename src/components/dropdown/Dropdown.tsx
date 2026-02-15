@@ -1,11 +1,11 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, type ReactNode } from "react";
 import { Button } from "../button/Button";
 import { useToggle } from "../../hooks/useToggle";
 import "./index.css";
 
 type DropdownProps = {
     children?: string[];
-    trigger?: string;
+    trigger?: ReactNode;
     variants?: string;
     onChange?: (value: string) => void;
     containerClass?: string;
