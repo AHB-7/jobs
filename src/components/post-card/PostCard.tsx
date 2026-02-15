@@ -9,12 +9,9 @@ import { Button } from "../button/Button";
 import { useState } from "react";
 import { FaMinus } from "react-icons/fa";
 import { GrFormClose } from "react-icons/gr";
+import type { PostDataTypes } from "../../types";
 
-export function PostCard({
-    post,
-}: {
-    post: { id: string; [key: string]: any };
-}) {
+export function PostCard({ post }: { post: PostDataTypes[0] }) {
     const [isEditing, toggleEditing] = useToggle();
     const [newBody, setNewBody] = useState(post.body ?? "");
     const [currentStatus, setCurrentStatus] = useState(post.status);

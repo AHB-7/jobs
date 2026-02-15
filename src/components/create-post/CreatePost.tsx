@@ -4,7 +4,7 @@ import { Dropdown } from "../dropdown/Dropdown";
 import { Button } from "../button/Button";
 import { STATUSES } from "../../constants/statuses";
 import "./index.css";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
     createPostSchema,
@@ -20,8 +20,7 @@ export function CreatePost() {
         handleSubmit,
         formState: { errors },
         reset,
-        setValue,
-        watch,
+        control,
     } = useForm<CreatePostFormData>({
         resolver: zodResolver(createPostSchema),
         defaultValues: {
@@ -29,8 +28,6 @@ export function CreatePost() {
             status: "",
         },
     });
-
-    const status = watch("status");
 
     const onSubmit = (data: CreatePostFormData) => {
         setUpdateError("");
@@ -56,22 +53,29 @@ export function CreatePost() {
                 <textarea
                     {...register("postContent")}
                     placeholder={
-                        errors.postContent
-                            ? errors.postContent.message
-                            : `${`Here we go again...`}`
+                        errors.postContent?.message || "Here we go again..."
                     }
                     className="post-input"
                 />
 
-                <Dropdown
-                    trigger={`${errors.status ? errors.status.message : status || "status"}`}
-                    variants="button-main-dropdown"
-                    onChange={(value: string) =>
-                        setValue("status", value, { shouldValidate: true })
-                    }
-                >
-                    {STATUSES}
-                </Dropdown>
+                <Controller
+                    name="status"
+                    control={control}
+                    render={({ field }) => (
+                        <Dropdown
+                            trigger={
+                                errors.status?.message ||
+                                field.value ||
+                                "status"
+                            }
+                            variants="button-main-dropdown"
+                            onChange={field.onChange}
+                        >
+                            {STATUSES}
+                        </Dropdown>
+                    )}
+                />
+
                 <Button
                     type="submit"
                     className={`create-post-btn ${updateSuccess ? "success" : ""}`}

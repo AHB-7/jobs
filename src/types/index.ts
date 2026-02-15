@@ -4,7 +4,7 @@ export type PostDataTypes = {
     id: string;
     body: string;
     status: string;
-    createdAt: Date;
+    createdAt: { toDate(): Date };
 }[];
 export type ButtonProps = ComponentPropsWithoutRef<"button"> & {
     children?: ReactNode;

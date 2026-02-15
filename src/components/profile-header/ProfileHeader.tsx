@@ -6,23 +6,15 @@ import { CiLogout } from "react-icons/ci";
 import { useToggle } from "../../hooks/useToggle";
 import { Input } from "../input/Input";
 import { Button } from "../button/Button";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import "./index.css";
 import { FcReuse } from "react-icons/fc";
 import { TbUserEdit } from "react-icons/tb";
-
-const updateProfileSchema = z.object({
-    displayName: z.string().min(1, "Display name is required"),
-    photoURL: z
-        .string()
-        .url("Please enter a valid URL")
-        .optional()
-        .or(z.literal("")),
-});
-
-type UpdateProfileFormData = z.infer<typeof updateProfileSchema>;
+import {
+    updateProfileSchema,
+    type UpdateProfileFormData,
+} from "../../constants/schema";
 
 export function ProfileHeader({ user }: { user: User | null }) {
     const [open, toggle] = useToggle();
@@ -32,7 +24,7 @@ export function ProfileHeader({ user }: { user: User | null }) {
         register,
         handleSubmit,
         formState: { errors },
-        watch,
+        control,
     } = useForm<UpdateProfileFormData>({
         resolver: zodResolver(updateProfileSchema),
         defaultValues: {
@@ -40,8 +32,6 @@ export function ProfileHeader({ user }: { user: User | null }) {
             photoURL: user?.photoURL || "",
         },
     });
-
-    const photoURL = watch("photoURL");
 
     const onUpdateProfile = async (data: UpdateProfileFormData) => {
         try {
@@ -68,31 +58,21 @@ export function ProfileHeader({ user }: { user: User | null }) {
     return (
         <>
             <div className="header">
-                {user?.photoURL !== "" &&
-                user?.photoURL !== null &&
-                user?.photoURL !== undefined ? (
+                {user?.photoURL ? (
                     <img
-                        src={`${user?.photoURL}`}
+                        src={user.photoURL}
                         alt="profile image"
-                        onClick={() => {
-                            toggle();
-                        }}
+                        onClick={toggle}
                     />
                 ) : (
                     <FcReuse
                         className="photo-viewer icon-viewer"
-                        role="Icone for profile image"
-                        onClick={() => {
-                            toggle();
-                        }}
+                        role="Icon for profile image"
+                        onClick={toggle}
                     />
                 )}
                 <div>
-                    <h1
-                        onClick={() => {
-                            toggle();
-                        }}
-                    >
+                    <h1 onClick={toggle}>
                         {user?.displayName || "Click to edit profile"}
                     </h1>
                     <p>{user?.email}</p>
@@ -106,12 +86,8 @@ export function ProfileHeader({ user }: { user: User | null }) {
                     signOutUser();
                 }}
             />
-            <TbUserEdit
-                className="edit"
-                onClick={() => {
-                    toggle();
-                }}
-            />
+            <TbUserEdit className="edit" onClick={toggle} />
+
             {open && (
                 <div className="profile-update-modal">
                     <form
@@ -129,26 +105,35 @@ export function ProfileHeader({ user }: { user: User | null }) {
                                 &times;
                             </button>
                         </div>
-                        <>
-                            {user?.photoURL !== "" &&
-                            user?.photoURL !== null &&
-                            photoURL === "" &&
-                            photoURL !== undefined ? (
-                                <img
-                                    src={`${photoURL || user?.photoURL}`}
-                                    alt="Profile"
-                                    className="photo-viewer "
-                                />
-                            ) : (
-                                <FcReuse className="photo-viewer icon-viewer" />
+
+                        <Controller
+                            name="photoURL"
+                            control={control}
+                            render={({ field }) => (
+                                <>
+                                    {field.value || user?.photoURL ? (
+                                        <img
+                                            src={
+                                                field.value ||
+                                                user?.photoURL ||
+                                                ""
+                                            }
+                                            alt="Profile"
+                                            className="photo-viewer"
+                                        />
+                                    ) : (
+                                        <FcReuse className="photo-viewer icon-viewer" />
+                                    )}
+                                </>
                             )}
-                        </>
+                        />
+
                         <Input
                             type="text"
                             label="Display name"
                             id="displayName"
                             placeholder="Enter your display name"
-                            defaultValue={`${user?.displayName}`}
+                            defaultValue={user?.displayName || ""}
                             error={errors.displayName?.message}
                             {...register("displayName")}
                         />
